@@ -1,0 +1,16 @@
+version: '2'
+services:
+    issLoginWebApp:
+        container_name: issLoginWebApp
+        image: endimion13/eidas-gr-isswebapp:1.0
+        expose:
+            - 8090
+        ports:
+            - 8090:8090
+        environment:
+            - EIDAS_PROPERTIES=CurrentFamilyName,CurrentGivenName,DateOfBirth,PersonIdentifier
+            - SP_FAIL_PAGE=https://www.google.com
+            - SP_SUCCESS_PAGE=http://138.68.103.237/loginSuccess
+            - SP_LOGO=http://trc.aiest.org/wp-content/uploads/2013/04/university-of-the-aegean.png
+            - ISS_URL=http://84.205.248.180/ISSPlus/ValidateToken
+            - SP_ID=2

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <body>
+        <div class="footerClass headerContainer" th:fragment="header">
+            <!--<div class="container">-->
+            <div class=" instructions">
+                <div class="col s12 m12 l12 " id="header-logo">
+                    <div th:if="${logo}">
+                        <img class="responsive-img" th:attr="src= ${logo}" style="max-height:100px;"></img>
+                    </div>
+                    
+                </div>
+            </div>
+            <!--</div>-->
+        </div>
+    </body>
+
+</html>

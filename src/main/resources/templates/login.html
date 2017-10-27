@@ -1,0 +1,160 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+        <meta charset="utf-8"></meta>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
+        <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+        <meta name="description" content=""></meta>
+        <meta name="author" content=""></meta>
+        <title>Create a new account</title>
+        <!-- Compiled and minified CSS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css"></link>
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"></link>
+        <link rel="stylesheet" href="css/main.css"></link>
+        <!-- Overide the sidebar css -->
+        <style>
+            .sideBarClass{
+                margin-top: 0;
+            }
+
+            .breadCrumbs{
+                font-size: 18px;
+                color:  #00be9f;
+                padding-left: 0px;
+            }
+        </style>
+    </head>
+    <body>
+
+
+        <div th:replace="header :: header">Header</div>
+
+        <div class="container">
+
+            <div class="row  mainContent">
+
+                <div class="col s12 m12 l8">
+                    <div class="container">
+
+
+                        <div class="row breadCrumbs">
+                            STEP | <b>GO</b>
+                        </div>
+
+                        <div class="row instructions">
+                            <div  class="col s12 flow-text hide-on-large-only">
+                                By clicking next you will be transfered to the,eIDAS  system to securely authenticate with this application. <br> </br>
+                                Please recall, that using the eIDAS system you trustly provide us your identity attributes such as name, address,
+                                etc. <br></br>
+                                eIDAS will provide us with those attributes from the attribute providers you suggest
+                                eIDAS will request your consent before sending us any information <br></br>
+                                After authorization you will be redirected to our service<br></br>
+                            </div>
+                            <div  class="col s12  hide-on-med-and-down ">
+                                By clicking next you will be transfered to the,eIDAS  system to securely authenticate with this application. <br> </br>
+                                Please recall, that using the eIDAS system you trustly provide us your identity attributes such as name, address,
+                                etc. <br></br>
+                                eIDAS will provide us with those attributes from the attribute providers you suggest
+                                eIDAS will request your consent before sending us any information <br></br>
+                                After authorization you will be redirected to our service<br></br>
+                            </div>
+                        </div>
+
+                        <div class="row">
+
+                            <div class="input-field col s12">
+                                <select id="countrySelection" class="icons">
+                                    <th:block th:each="country : ${countries}">
+                                        <div th:switch="${country.code}"> 
+                                            <option th:case="GR" selected="true" th:value="${country.code}" th:attr="data-icon= 'img/flags/' + ${country.name} + '_flag.gif'" th:text="${#strings.toUpperCase(country.name)}"></option>
+                                            <option th:case="*"  th:value="${country.code}" th:attr="data-icon= 'img/flags/' + ${country.name} + '_flag.gif'" th:text="${#strings.toUpperCase(country.name)}"></option>
+                                        </div>
+
+                                    </th:block>
+
+                                </select>
+                                <label>Select Your Country of Origin</label>
+                            </div>
+
+                            <div class="input-field col s12" style="display:none">
+                                <select id="typeOfLogin" class="icons" >
+                                    <option value="eIDAS"  >eIDAS</option>
+                                    <option value="peps" selected="true">PEPS</option>    
+                                </select>
+                                <label>Select means of identification </label>
+                            </div>
+
+
+                            <div class="col s12 m12 l6">
+                                <a class="waves-effect waves-light btn-large swell-btn cancel-btn" onclick="onCancelClick()">Cancel</a>
+                            </div>
+                            <div class="col s12 m12 l6">
+                                <a id="next" class="waves-effect waves-light btn-large swell-btn next-btn" onclick="onNextClick()">Next</a>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+
+
+
+
+                <input id="eidasUrl" type="hidden" th:value="${nodeUrl}"/>
+                <div class="col s12 m12 l4">
+                    <div   th:replace="sidebar :: sidebar"></div>
+                </div>
+
+
+
+
+            </div>
+
+            <div class="row" th:replace="footer :: footer"></div>
+
+        </div>
+
+        <!--Import jQuery before materialize.js-->
+        <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+        <!-- Compiled and minified JavaScript -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
+        <script th:inline="javascript">
+            /*<![CDATA[*/
+            $(document).ready(function () {
+                $('select').material_select();
+                if (!$('#countrySelection').val()) {
+                    $('#next').removeClass("waves-effect waves-light submit").addClass('disabled');
+                }
+
+                $('#countrySelection').change(function () {
+                    if (this.vaue !== "") {
+                        $('#next').removeClass("disabled").addClass('waves-effect waves-light submit');
+                    } else {
+                        $('#next').removeClass("waves-effect waves-light submit").addClass('disabled');
+                    }
+
+                });
+            });
+
+
+            function onNextClick() {
+                let country = $("#countrySelection").val();
+                let location = [[${issUrl}]]
+                               +"?t="+[[${token}]]
+                               +"&sp="+[[${sp}]]
+                               +"&cc="+ country 
+                               +"&saml=eIDAS"; 
+
+                window.location = location;                               
+            }
+
+            function onCancelClick() {
+                let failPage = [[${spFailPage}]];
+                window.location = failPage;
+            }
+            /*]]>*/
+        </script>
+    </body>
+</html>
