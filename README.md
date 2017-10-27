@@ -2,7 +2,7 @@
 
 
 Example of using this as a service (pulling it from dockerhub):
-# DipSup login microservice
+
   loginWebApp:
     image: endimion13/eidas-gr-isswebapp:1.1
     ports:
