@@ -14,6 +14,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import static org.hamcrest.Matchers.is;
@@ -107,6 +108,8 @@ public class TestRestControllers {
         ObjectMapper mapper = new ObjectMapper();
         String access_token = Jwts.builder()
                 .setSubject(mapper.writeValueAsString(jsonMap))
+//                .setIssuedAt(new Date())
+//                .setIssuer("eIDModule")
                 .signWith(SignatureAlgorithm.HS256, SECRET.getBytes("UTF-8"))
                 .compact();
 

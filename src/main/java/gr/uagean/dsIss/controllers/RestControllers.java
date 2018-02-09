@@ -7,8 +7,10 @@ package gr.uagean.dsIss.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import gr.uagean.dsIss.model.pojo.IssAttributeList;
+import gr.uagean.dsIss.model.pojo.IssErrorResponse;
 import gr.uagean.dsIss.model.pojo.ResponseForISS;
 import gr.uagean.dsIss.service.EidasPropertiesService;
+import gr.uagean.dsIss.utils.IssErrorMapper;
 import gr.uagean.dsIss.utils.IssResponseParser;
 import gr.uagean.dsIss.utils.Wrappers;
 import io.jsonwebtoken.Jwts;
@@ -36,7 +38,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class RestControllers {
 
     Logger log = LoggerFactory.getLogger(RestControllers.class);
-    private final static String SECRET = "secret";
+    private final static String SECRET = System.getenv("SP_SECRET");
 
     @Autowired
     private EidasPropertiesService propServ;
@@ -58,10 +60,12 @@ public class RestControllers {
         try {
 
             log.info("received the string: \n" + responseString);
-            if (responseString.trim().equals("{}") || StringUtils.isEmpty(responseString.trim())) {
-                log.info("Empty Response");
+            if (responseString.trim().equals("{}") || StringUtils.isEmpty(responseString.trim())
+                    || (responseString.contains("StatusCode") && responseString.contains("StatusMessage"))) {
+                log.info("Error Response");
+                cacheManager.getCache("tokens").put(token, responseString);
                 return new ResponseForISS(false);
-            } 
+            }
 
             Map<String, String> jsonMap = IssResponseParser.parse(responseString);
             ObjectMapper mapper = new ObjectMapper();
@@ -77,11 +81,5 @@ public class RestControllers {
             return new ResponseForISS(false);
         }
     }
-    
-    
-    
-    
-    
-    
 
 }

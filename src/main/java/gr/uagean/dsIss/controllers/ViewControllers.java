@@ -66,21 +66,31 @@ public class ViewControllers {
             String jwt = cacheManager.getCache("tokens").get(token).get().toString();
             Cookie cookie = new Cookie("access_token", jwt);
             cookie.setPath("/");
-            cookie.setMaxAge(30 * 60);
+            int maxAge = Integer.parseInt(System.getenv("AUTH_DURATION"));
+            cookie.setMaxAge(maxAge);
             response.addCookie(cookie);
             return "redirect:" + System.getenv(SP_SUCCESS_PAGE);
         }
-        
-        return  "redirect:" +System.getenv(SP_FAIL_PAGE);
+
+        Cookie cookie = new Cookie("access_token", "");
+        cookie.setPath("/");
+        int maxAge = Integer.parseInt(System.getenv("AUTH_DURATION"));
+        cookie.setMaxAge(maxAge);
+        response.addCookie(cookie);
+        return "redirect:" + System.getenv(SP_FAIL_PAGE);
     }
-    
-    
-    
+
     @RequestMapping("/authfail")
     public String authorizationFail(@RequestParam(value = "t", required = true) String token,
             HttpSession httpSession, HttpServletRequest request, HttpServletResponse response) {
 
-        return "redirect:" +System.getenv(SP_FAIL_PAGE);
+        String jwt = cacheManager.getCache("tokens").get(token).get().toString();
+        Cookie cookie = new Cookie("access_token", jwt);
+        cookie.setPath("/");
+        int maxAge = Integer.parseInt(System.getenv("AUTH_DURATION"));
+        cookie.setMaxAge(maxAge);
+        response.addCookie(cookie);
+        return "redirect:" + System.getenv(SP_FAIL_PAGE);
     }
 
 }
