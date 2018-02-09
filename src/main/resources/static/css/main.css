@@ -8,7 +8,7 @@
 }
 
 #header-logo{
-    margin-left: 13em;
+    /*margin-left: 13em;*/
 }
 
 
@@ -56,11 +56,15 @@
 }
 
 .sideBarClass{
-    margin-top: 13em;
+    /*margin-top: 13em;*/
 }
 @media only screen and (max-width: 1000px) {
     .sideBarClass{
         margin-top: 0;
+    }
+    
+    #companyLogo{
+        padding-left:0!important;
     }
 }
 
@@ -80,9 +84,9 @@
     width: 100%;
     height: 10em;
 }
-
+/*
 #element-container{
     width: 100%;
     height: 10em;
     padding: 0px 5em 0 9em;
-}
+}*/

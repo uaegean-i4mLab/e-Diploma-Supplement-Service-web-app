@@ -45,20 +45,24 @@
 
                         <div class="row instructions">
                             <div  class="col s12 flow-text hide-on-large-only">
-                                By clicking next you will be transfered to the,eIDAS  system to securely authenticate with this application. <br> </br>
-                                Please recall, that using the eIDAS system you trustly provide us your identity attributes such as name, address,
-                                etc. <br></br>
-                                eIDAS will provide us with those attributes from the attribute providers you suggest
-                                eIDAS will request your consent before sending us any information <br></br>
-                                After authorization you will be redirected to our service<br></br>
+                                <p>By clicking next you will be transfered to the, eIDAS  system to securely authenticate with this application.</p>
+                                <p>
+                                    Please recall, that using the eIDAS system you trustly provide us your identity attributes such as name, address,
+                                    etc. </p>
+                                <p>eIDAS will provide us with those attributes from the attribute providers you suggest. </p>
+                                <p>eIDAS will request your consent before sending us any information. </p>
+
+                                After authorization you will be redirected to our service.
                             </div>
                             <div  class="col s12  hide-on-med-and-down ">
-                                By clicking next you will be transfered to the,eIDAS  system to securely authenticate with this application. <br> </br>
-                                Please recall, that using the eIDAS system you trustly provide us your identity attributes such as name, address,
-                                etc. <br></br>
-                                eIDAS will provide us with those attributes from the attribute providers you suggest
-                                eIDAS will request your consent before sending us any information <br></br>
-                                After authorization you will be redirected to our service<br></br>
+                                <p>By clicking next you will be transfered to the, eIDAS  system to securely authenticate with this application. </p>
+                                <p>
+                                    Please recall, that using the eIDAS system you trustly provide us your identity attributes such as name, address,
+                                    etc. </p>
+                                <p>eIDAS will provide us with those attributes from the attribute providers you suggest. </p>
+                                <p>eIDAS will request your consent before sending us any information. </p>
+
+                                After authorization you will be redirected to our service.
                             </div>
                         </div>
 
@@ -121,40 +125,37 @@
         <!-- Compiled and minified JavaScript -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
         <script th:inline="javascript">
-            /*<![CDATA[*/
-            $(document).ready(function () {
-                $('select').material_select();
-                if (!$('#countrySelection').val()) {
-                    $('#next').removeClass("waves-effect waves-light submit").addClass('disabled');
-                }
+                                    /*<![CDATA[*/
+                                    $(document).ready(function () {
+                                    $('select').material_select();
+                                    if (!$('#countrySelection').val()) {
+                                    $('#next').removeClass("waves-effect waves-light submit").addClass('disabled');
+                                    }
 
-                $('#countrySelection').change(function () {
-                    if (this.vaue !== "") {
-                        $('#next').removeClass("disabled").addClass('waves-effect waves-light submit');
-                    } else {
-                        $('#next').removeClass("waves-effect waves-light submit").addClass('disabled');
-                    }
+                                    $('#countrySelection').change(function () {
+                                    if (this.vaue !== "") {
+                                    $('#next').removeClass("disabled").addClass('waves-effect waves-light submit');
+                                    } else {
+                                    $('#next').removeClass("waves-effect waves-light submit").addClass('disabled');
+                                    }
 
-                });
-            });
+                                    });
+                                    });
+                                    function onNextClick() {
+                                    let country = $("#countrySelection").val();
+                                    let location = [[${issUrl}]]
+                                            + "?t=" + [[${token}]]
+                                            + "&sp=" + [[${sp}]]
+                                            + "&cc=" + country
+                                            + "&saml=eIDAS";
+                                    window.location = location;
+                                    }
 
-
-            function onNextClick() {
-                let country = $("#countrySelection").val();
-                let location = [[${issUrl}]]
-                               +"?t="+[[${token}]]
-                               +"&sp="+[[${sp}]]
-                               +"&cc="+ country 
-                               +"&saml=eIDAS"; 
-
-                window.location = location;                               
-            }
-
-            function onCancelClick() {
-                let failPage = [[${spFailPage}]];
-                window.location = failPage;
-            }
-            /*]]>*/
+                                    function onCancelClick() {
+                                    let failPage = [[${spFailPage}]];
+                                    window.location = failPage;
+                                    }
+                                    /*]]>*/
         </script>
     </body>
 </html>

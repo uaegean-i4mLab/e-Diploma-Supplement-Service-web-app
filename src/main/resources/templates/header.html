@@ -1,18 +1,25 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
     <body>
-        <div class="footerClass headerContainer" th:fragment="header">
+        <div th:fragment="header">
+            <div  class="footerClass headerContainer" >
             <!--<div class="container">-->
+
             <div class=" instructions">
-                <div class="col s12 m12 l12 " id="header-logo">
-                    <div th:if="${logo}">
-                        <img class="responsive-img" th:attr="src= ${logo}" style="max-height:100px;"></img>
+                <div class="row">
+                    <div class="col s6 m6 l6 " id="header-logo">
+                        <img id="companyLogo" class="responsive-img" th:attr="src= ${logo}" style="max-height:100px;float:left;padding-left: 16em;"/>
                     </div>
-                    
-                </div>
+                    <div class="col s6 m6 l6 " id="header-logo-aegean">
+                        <img class="responsive-img" src="img/uaegeanI4m.png" style="max-height:100px;float:right;padding-right: 8em;"/>
+                    </div>
+                </div>    
+
             </div>
-            <!--</div>-->
+
         </div>
+        </div>
+        
     </body>
 
 </html>
