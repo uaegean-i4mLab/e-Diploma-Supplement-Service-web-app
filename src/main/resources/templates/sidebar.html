@@ -1,4 +1,4 @@
- 
+  
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"> 
 
@@ -7,22 +7,28 @@
             <div class="container">
                 <div class="row">
                     <div class="col s4  l12">
-                        <a href="instructions">
-                            <div id="Instructions" style="background: url(../img/instructions.png);background-size: cover;background-repeat: no-repeat; width: 56px;height: 56px;" > </div>
-                            <p style="margin:0">Instructions</p>
+                        <a href="instructions" target="_blank">
+                            <img src="/img/instructions.png" style="
+                                 max-width:  60px;
+                                 margin-left: 5%;
+                                 "/>
+                            <p style="margin-top:  0;">Instructions</p>
                         </a>
                     </div>
                     <div class="col s4  l12">
-                        <a href="about">
+                        <a href="about" style="margin-left: 0.5rem;"  target="_blank">
                             <i class="medium material-icons">info_outline</i>
-                            <p style="margin:0;padding-left:10px; padding-bottom:10px;">About</p>
+                            <p style="margin-left: 1.2rem; margin-top: 0;margin-bottom: 0;">About</p>
                         </a>
                     </div>
 
                     <div class="col s4  l12">
-                        <a href="instructions">
-                            <div id="eIDASbtn"></div>
-                            <p style="padding-left: 10px; margin:0;">eIDAS</p>
+                        <a href="instructions"  target="_blank">
+                            <!--<div id="eIDASbtn"></div>-->
+                            <img src="/img/eidas_logo2.jpg" style="max-width: 56px;
+                                 margin-left: 5%;"/>
+                            <p style="margin-top: 0;
+                               margin-left: 0.7rem;">@eID_EU</p>
                         </a>
                     </div>
 
@@ -32,6 +38,7 @@
 
 
         </div>
+
     </body>
 
 </html>

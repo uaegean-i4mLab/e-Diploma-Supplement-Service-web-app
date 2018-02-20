@@ -32,8 +32,13 @@
 }
 
 .cancel-btn{
-    background-color: #72a5f6;
-    color: #5674b9;
+    background-color: #c7d8ff;
+    color: white;
+}
+
+
+.swell-btn:hover{
+    background-color:#049ede!important;
 }
 
 .next-btn{
@@ -61,11 +66,33 @@
 @media only screen and (max-width: 1000px) {
     .sideBarClass{
         margin-top: 0;
+        margin-left: 1rem;
     }
-    
+
     #companyLogo{
-        padding-left:0!important;
+        padding-left: 22%!important;
     }
+
+    #uAegeanLogo{
+        max-height: 55px!important;
+    }
+    #border{
+        width: 100%!important;
+        margin-left:0!important;
+    }
+
+    .footer-container{
+        margin-left: 0!important;
+    }
+
+    .footerCol{
+        padding-left:0.5!important;
+    }
+
+    #flags{
+        padding-left: 4%;
+    }
+
 }
 
 
@@ -90,3 +117,38 @@
     height: 10em;
     padding: 0px 5em 0 9em;
 }*/
+
+.select-wrapper+label{
+    font-size: 1.1rem!important;
+
+}
+
+.input-field.inline input, .input-field.inline .select-dropdown {
+    margin-bottom: 0.2rem!important;
+}
+
+.select-wrapper input.select-dropdown{
+    margin: 0px 0 0px 0!important;
+}
+
+
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+main{
+    flex: 1 0 auto;
+}
+
+.breadCrumbs{
+    color: #446eff!important;
+}
+
+.progress{
+    background-color: #049ede!important;
+}
+
+.progress .indeterminate {
+    background-color: #aed6e6!important;
+}

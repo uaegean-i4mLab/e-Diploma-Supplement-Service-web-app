@@ -44,5 +44,29 @@ public class EidasPropertiesServiceImpl implements EidasPropertiesService {
         }
     }
 
+    @Override
+    public List<String> getNaturalProperties() throws NullPointerException {
+        return getEidasProperties().stream().filter( prop ->{
+            return prop.contains("naturalperson");
+        }).map(prop ->{
+            String[] segments = prop.split("/");
+            return segments[segments.length -1];
+        }).map(prop ->{
+               return String.join(" ", prop.split("(?<!(^|[A-Z]))(?=[A-Z])|(?<!^)(?=[A-Z][a-z])") );
+        }).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<String> getLegalProperties() throws NullPointerException {
+        return getEidasProperties().stream().filter( prop ->{
+            return prop.contains("legal");
+        }).map(prop ->{
+            String[] segments = prop.split("/");
+            return segments[segments.length -1];
+        }).map(prop ->{
+               return String.join(" ", prop.split("(?<!(^|[A-Z]))(?=[A-Z])|(?<!^)(?=[A-Z][a-z])") );
+        }).collect(Collectors.toList());
+    }
+
 }
 

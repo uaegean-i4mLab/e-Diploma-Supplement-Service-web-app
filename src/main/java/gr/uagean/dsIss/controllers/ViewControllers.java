@@ -6,6 +6,8 @@
 package gr.uagean.dsIss.controllers;
 
 import gr.uagean.dsIss.service.CountryService;
+import gr.uagean.dsIss.service.EidasPropertiesService;
+import java.util.ArrayList;
 import java.util.UUID;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -37,6 +39,9 @@ public class ViewControllers {
 
     @Autowired
     private CountryService countryServ;
+    
+    @Autowired
+    private EidasPropertiesService propServ;
 
     @Autowired
     private CacheManager cacheManager;
@@ -55,6 +60,12 @@ public class ViewControllers {
         mv.addObject("token", token.toString());
         mv.addObject("sp", System.getenv(SP_ID));
         mv.addObject("logo", System.getenv(SP_LOGO));
+        
+        
+        
+        mv.addObject("legal", propServ.getLegalProperties());
+        mv.addObject("natural", propServ.getNaturalProperties());
+        
         return mv;
     }
 

@@ -15,5 +15,10 @@ import java.util.List;
 public interface EidasPropertiesService {
     
     public List<String> getEidasProperties() throws NullPointerException;
+    
+    public List<String> getNaturalProperties() throws NullPointerException;
+    
+    public List<String> getLegalProperties() throws NullPointerException;
+    
 }
 

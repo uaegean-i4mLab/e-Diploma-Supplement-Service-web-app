@@ -7,10 +7,8 @@ package gr.uagean.dsIss.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import gr.uagean.dsIss.model.pojo.IssAttributeList;
-import gr.uagean.dsIss.model.pojo.IssErrorResponse;
 import gr.uagean.dsIss.model.pojo.ResponseForISS;
 import gr.uagean.dsIss.service.EidasPropertiesService;
-import gr.uagean.dsIss.utils.IssErrorMapper;
 import gr.uagean.dsIss.utils.IssResponseParser;
 import gr.uagean.dsIss.utils.Wrappers;
 import io.jsonwebtoken.Jwts;
