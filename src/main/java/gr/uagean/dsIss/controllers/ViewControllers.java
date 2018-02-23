@@ -95,8 +95,8 @@ public class ViewControllers {
     public String authorizationFail(@RequestParam(value = "t", required = true) String token,
             HttpSession httpSession, HttpServletRequest request, HttpServletResponse response) {
 
-        String jwt = cacheManager.getCache("tokens").get(token).get().toString();
-        Cookie cookie = new Cookie("access_token", jwt);
+//        String jwt = cacheManager.getCache("tokens").get(token).get().toString();
+        Cookie cookie = new Cookie("access_token", "");
         cookie.setPath("/");
         int maxAge = Integer.parseInt(System.getenv("AUTH_DURATION"));
         cookie.setMaxAge(maxAge);
