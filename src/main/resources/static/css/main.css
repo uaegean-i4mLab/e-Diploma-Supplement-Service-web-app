@@ -152,3 +152,21 @@ main{
 .progress .indeterminate {
     background-color: #aed6e6!important;
 }
+
+
+.dropdown-content.select-dropdown  > li > span{
+    color: #039be5;
+}
+
+body > main > div > div > form > div > div.col.s12 > div:nth-child(3) > div.input-field.inline.col.s12 > label.active{
+        color: #039be5;
+}
+
+body > main > div > div > form > div > div.col.s12 > div:nth-child(3) > div:nth-child(2) > label.active{
+        color: #039be5;
+}
+
+ .input-field input[type=email]:focus {
+     border-bottom: 1px solid #039be5;
+     box-shadow: 0 1px 0 0 #039be5;
+   }

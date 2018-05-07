@@ -17,9 +17,10 @@
                 <Env.EIDAS_PROPERTIES>CurrentFamilyName,CurrentGivenName,DateOfBirth,PersonIdentifier</Env.EIDAS_PROPERTIES>
                 <Env.SP_FAIL_PAGE>https://www.google.com</Env.SP_FAIL_PAGE>
                 <Env.SP_SUCCESS_PAGE>http://138.68.103.237/loginSuccess</Env.SP_SUCCESS_PAGE>
-                <Env.SP_LOGO>http://trc.aiest.org/wp-content/uploads/2013/04/university-of-the-aegean.png</Env.SP_LOGO>
+                <Env.SP_LOGO>http://communities-i4mlab.aegean.gr:8080/loginapp/img/logo2.png</Env.SP_LOGO>
                 <Env.ISS_URL>http://84.205.248.180/ISSPlus/ValidateToken</Env.ISS_URL>
                 <Env.SP_ID>2</Env.SP_ID>
+                <Env.UAEGEAN_LOGIN>true</Env.UAEGEAN_LOGIN>
                 
                 
                 

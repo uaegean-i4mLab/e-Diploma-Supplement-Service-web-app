@@ -13,6 +13,12 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css"></link>
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"></link>
         <link rel="stylesheet" href="css/main.css"></link>
+        <link rel="icon"
+              type="image/x-icon"
+              href="favicon.ico"></link>
+        <link rel="icon"
+              type="image/x-icon"
+              href="favicon.ico"></link>
         <!-- Overide the sidebar css -->
         <style>
             .sideBarClass{
@@ -35,43 +41,63 @@
 
             <div class="row  mainContent">
 
-                <div class="col s12 m12 l8">
-                    <div class="container">
+                <div class="col s12 m12 l10">
 
+                    <div class="container" style="width: 90%;">
 
                         <div class="row breadCrumbs">
-                            <div class="col s12">
-                                STEP | <b>GO</b>
+                            <div class="col s12" style="font-size: larger;">
+                                STEP | <b>GO!</b>
                             </div>
+
                         </div>
 
                         <div class="row instructions">
                             <div  class="col s12 flow-text hide-on-large-only">
-                                <p>By clicking next you will be transfered to the, eIDAS  system to securely authenticate with this application.</p>
                                 <p>
-                                    Please recall, that using the eIDAS system you trustly provide us your identity attributes such as name, address,
-                                    etc. </p>
-                                <p>eIDAS will provide us with those attributes from the attribute providers you suggest. </p>
-                                <p>eIDAS will request your consent before sending us any information. </p>
-
-                                After authorization you will be redirected to our service.
-
-                                <p>To review the identification attributes that will be requested by eID_EU click 
-                                    <a  href="#modal1">HERE</a>
+                                    You will now be directed to the eIDAS Network to securely identify and trustly 
+                                    provide us your main identity attributes. Review the identification attributes that will be requested  <a  href="#modal1">HERE</a>
                                 </p>
+
+                                <p> 
+                                    The eIDAS Network will provide us with those attributes from the attribute provider you will suggest (eID-EU)
+                                </p>
+
+                                <p>
+                                    The eIDAS Network will request your consent before sending us any information
+                                </p>
+                                <p>
+                                    After successful authentication you will be redirected to our service
+                                </p>
+
+                                <p> <span style="color:#446eff;font-weight: bold;">Only for UAegean</span> students | faculty | staff  
+                                    Alternatively, Identify via your UAegean credentials 
+                                    <a  style="cursor: pointer;" onclick="onNextClickUAegean()">HERE</a>
+                                </p>
+
                             </div>
                             <div  class="col s12  hide-on-med-and-down ">
-                                <p>By clicking next you will be transfered to the, eIDAS  system to securely authenticate with this application. </p>
                                 <p>
-                                    Please recall, that using the eIDAS system you trustly provide us your identity attributes such as name, address,
-                                    etc. </p>
-                                <p>eIDAS will provide us with those attributes from the attribute providers you suggest. </p>
-                                <p>eIDAS will request your consent before sending us any information. </p>
-
-                                After authorization you will be redirected to our service.
-                                <p>To review the identification attributes that will be requested by eID_EU click 
-                                    <a  href="#modal1">HERE</a>
+                                    You will now be directed to the eIDAS Network to securely identify and trustly 
+                                    provide us your main identity attributes. Review the identification attributes that will be requested  <a  href="#modal1">HERE</a>
                                 </p>
+                                <p> 
+                                    The eIDAS Network will provide us with those attributes from the attribute provider you will suggest (eID-EU)
+                                </p>
+                                <p>
+                                    The eIDAS Network will request your consent before sending us any information
+                                </p>
+                                <p>
+                                    After successful authentication you will be redirected to our service
+                                </p>
+                                
+                                
+                                <p th:if="${uAegeanLogin}"> 
+                                    <span style="color:#446eff;font-weight: bold;">Only for UAegean</span> students | faculty | staff  
+                                    Alternatively, Identify via your UAegean credentials 
+                                    <a  style="cursor: pointer;" onclick="onNextClickUAegean()">HERE</a>
+                                </p>
+                            
                             </div>
                         </div>
 
@@ -110,14 +136,14 @@
                         </div>
 
 
+
                     </div>
                 </div>
 
 
 
-
                 <input id="eidasUrl" type="hidden" th:value="${nodeUrl}"/>
-                <div class="col s12 m12 l4">
+                <div class="col s12 m12 l2">
                     <div   th:replace="sidebar :: sidebar"></div>
                 </div>
 
@@ -164,8 +190,13 @@
 
                                     function onCancelClick() {
                                     let failPage = [[${spFailPage}]];
-                                    window.location = failPage;
+                                    window.location = "/authfail?reason=disagree";
                                     }
+                                    function onNextClickUAegean() {
+                                    let location = "http://eidasiss.aegean.gr:8081/ISS2/ldap.jsp?t=" + [[${token}]] + "&sp=" + [[${sp}]];
+                                    window.location = location;
+                                    }
+
                                     /*]]>*/
         </script>
     </body>

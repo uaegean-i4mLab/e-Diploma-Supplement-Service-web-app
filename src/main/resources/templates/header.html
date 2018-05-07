@@ -1,8 +1,29 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
     <body>
+        <!--        <header th:fragment="header">
+                    <div class=" headerContainer">
+                        <div class=" instructions" >
+                            <div class="row">
+                                <div class="col s6 m6 l6 " id="header-logo">
+                                    <img id="companyLogo" class="responsive-img" th:attr="src= ${logo}" style="margin-top: 1.8em;
+                                         max-height: 55px;float:left;    padding-left: 40.5%;"/>
+                                </div>
+                                <div class="col s6 m6 l6 " id="header-logo-aegean">
+                                    <img id="uAegeanLogo" class="responsive-img" src="img/uaegeanI4m.png" style="margin-top: 0.8em;
+                                         margin-bottom: 1.5em;
+                                         max-height: 75px;float:right; margin-right: 38%;"/>
+                                </div>
+                            </div>    
+        
+                        </div>
+                    </div>
+                </header>-->
+
+
         <header th:fragment="header">
             <div class="footerClass headerContainer">
+                <!--<div class="container">-->
                 <div class=" instructions" style="width:90%">
                     <div class="row">
                         <div class="col s6 m6 l6 " id="header-logo">
@@ -12,11 +33,14 @@
                         <div class="col s6 m6 l6 " id="header-logo-aegean">
                             <img id="uAegeanLogo" class="responsive-img" src="img/uaegeanI4m.png" style="margin-top: 0.8em;
                                  margin-bottom: 1.5em;
-                                 max-height: 75px;float:right;"/>
+                                 max-height: 75px;float:right; margin-right: 16%;"/>
                         </div>
                     </div>    
 
                 </div>
+                <!--</div>-->
+
+
             </div>
         </header>
     </body>
