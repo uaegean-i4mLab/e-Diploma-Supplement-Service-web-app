@@ -15,6 +15,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
+import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -39,7 +40,7 @@ public class CountryServiceImpl implements CountryService {
         ArrayList<Country> countries = new ArrayList();
 
         try {
-            input = new FileInputStream("/webappConfig/countries.properties");
+                input = new FileInputStream("/webappConfig/countries.properties");
             prop.load(input);
             prop.forEach((cntrName, code) -> {
                 countries.add(new Country((String) cntrName, (String) code, true));
@@ -72,7 +73,7 @@ public class CountryServiceImpl implements CountryService {
                             new Country("portugal", "POR", true),
                             new Country("romania", "RO", true),
                             new Country("slovakia", "SL", true),
-                            new Country("spain", "SP", true),
+                            new Country("spain", "ES", true),
                             new Country("sweden", "SW", true),
                             new Country("test", "CA", true)
                     )
@@ -86,7 +87,9 @@ public class CountryServiceImpl implements CountryService {
                 }
             }
         }
-        return countries;
+        return countries.stream().sorted( (c1 ,c2) -> {
+            return c1.getName().compareTo(c2.getName());
+        }).collect(Collectors.toList());
 
     }
 

@@ -7,6 +7,7 @@ package gr.uagean.dsIss.controllers;
 
 import gr.uagean.dsIss.service.CountryService;
 import gr.uagean.dsIss.service.EidasPropertiesService;
+import gr.uagean.dsIss.utils.CookieUtils;
 import java.util.UUID;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -36,7 +37,7 @@ public class ViewControllers {
     final static String SP_SUCCESS_PAGE = "SP_SUCCESS_PAGE";
     final static String SP_ID = "SP_ID";
     final static String SP_LOGO = "SP_LOGO";
-    final static String UAEGEAN_LOGIN="UAEGEAN_LOGIN";
+    final static String UAEGEAN_LOGIN = "UAEGEAN_LOGIN";
 
     final static Logger log = LoggerFactory.getLogger(ViewControllers.class);
 
@@ -67,7 +68,7 @@ public class ViewControllers {
 
         mv.addObject("legal", propServ.getLegalProperties());
         mv.addObject("natural", propServ.getNaturalProperties());
-        String uAegeanLogin  = StringUtils.isEmpty(System.getenv(UAEGEAN_LOGIN))?null:System.getenv(UAEGEAN_LOGIN);
+        String uAegeanLogin = StringUtils.isEmpty(System.getenv(UAEGEAN_LOGIN)) ? null : System.getenv(UAEGEAN_LOGIN);
         mv.addObject("uAegeanLogin", uAegeanLogin);
         return mv;
     }
@@ -80,16 +81,14 @@ public class ViewControllers {
             String jwt = cacheManager.getCache("tokens").get(token).get().toString();
             Cookie cookie = new Cookie("access_token", jwt);
             cookie.setPath("/");
-            int maxAge = Integer.parseInt(System.getenv("AUTH_DURATION"));
-            cookie.setMaxAge(maxAge);
+            CookieUtils.addDurationIfNotNull(cookie);
             response.addCookie(cookie);
             return "redirect:" + System.getenv(SP_SUCCESS_PAGE);
         }
 
         Cookie cookie = new Cookie("access_token", "");
         cookie.setPath("/");
-        int maxAge = Integer.parseInt(System.getenv("AUTH_DURATION"));
-        cookie.setMaxAge(maxAge);
+        CookieUtils.addDurationIfNotNull(cookie);
         response.addCookie(cookie);
         return "redirect:" + System.getenv(SP_FAIL_PAGE);
     }
