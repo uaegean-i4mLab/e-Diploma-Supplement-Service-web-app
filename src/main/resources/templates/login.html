@@ -70,10 +70,23 @@
                                     After successful authentication you will be redirected to our service
                                 </p>
 
-                                <p> <span style="color:#446eff;font-weight: bold;">Only for UAegean</span> students | faculty | staff  
+                                <p th:if="${uAegeanLogin}"> 
+                                    <span style="color:#446eff;font-weight: bold;">Only for UAegean</span> students | faculty | staff  
                                     Alternatively, Identify via your UAegean credentials 
                                     <a  style="cursor: pointer;" onclick="onNextClickUAegean()">HERE</a>
+                                </p>    
+
+                                <p th:if="${linkedIn}"> 
+                                    <!--<span style="color:#446eff;font-weight: bold;"></span>-->
+                                    Finally, it is possible to identify via LinkedIn, 
+                                    <img  onclick="linkedInClick()" 
+                                          src='img/linkedIn.png'
+                                          style="
+                                          cursor: pointer;
+                                          width:11rem"/>
+
                                 </p>
+
 
                             </div>
                             <div  class="col s12  hide-on-med-and-down ">
@@ -90,14 +103,27 @@
                                 <p>
                                     After successful authentication you will be redirected to our service
                                 </p>
-                                
-                                
+
+
                                 <p th:if="${uAegeanLogin}"> 
                                     <span style="color:#446eff;font-weight: bold;">Only for UAegean</span> students | faculty | staff  
                                     Alternatively, Identify via your UAegean credentials 
                                     <a  style="cursor: pointer;" onclick="onNextClickUAegean()">HERE</a>
                                 </p>
-                            
+
+
+                                <p th:if="${linkedIn}"> 
+                                    <!--<span style="color:#446eff;font-weight: bold;"></span>-->
+                                    Finally, it is possible to identify via LinkedIn, 
+                                    <img  onclick="linkedInClick()" 
+                                          src='img/linkedIn.png'
+                                          style="
+                                          cursor: pointer;
+                                          width:11rem"/>
+
+                                </p>
+
+
                             </div>
                         </div>
 
@@ -185,6 +211,19 @@
                                             + "&sp=" + [[${sp}]]
                                             + "&cc=" + country
                                             + "&saml=eIDAS";
+                                    window.location = location;
+                                    }
+
+                                    function linkedInClick() {
+                                    let clientId = [[${clientID}]];
+                                    let redirectURI = [[${redirectURI}]];
+                                    let responseType = [[${responseType}]];
+                                    let state = [[${state}]];
+                                    let location = "https://www.linkedin.com/oauth/v2/authorization?"
+                                            + "response_type=" + responseType
+                                            + "&client_id=" + clientId
+                                            + "&redirect_uri=" + redirectURI
+                                            + "&state=" + state;
                                     window.location = location;
                                     }
 

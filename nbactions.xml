@@ -21,6 +21,10 @@
                 <Env.ISS_URL>http://84.205.248.180/ISSPlus/ValidateToken</Env.ISS_URL>
                 <Env.SP_ID>2</Env.SP_ID>
                 <Env.UAEGEAN_LOGIN>true</Env.UAEGEAN_LOGIN>
+                <Env.CLIENT_ID>867kszvon99qp4</Env.CLIENT_ID>
+                <Env.REDIRECT_URI>http://eideusmartclass.aegean.gr:9091/linkedInResponse</Env.REDIRECT_URI>
+                <Env.LINKED_IN_SECRET>7hrWS3oDQlhFEXvQ</Env.LINKED_IN_SECRET>
+                <Env.LINKED_IN>true</Env.LINKED_IN>
                 
                 
                 
