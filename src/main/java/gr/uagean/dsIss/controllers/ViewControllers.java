@@ -57,6 +57,7 @@ public class ViewControllers {
     private final static String SECRET = System.getenv("SP_SECRET");
     final static String CLIENT_ID = "CLIENT_ID";
     final static String REDIRECT_URI = "REDIRECT_URI";
+    final static String HTTP_HEADER = "HTTP_HEADER";
 
     final static Logger log = LoggerFactory.getLogger(ViewControllers.class);
 
@@ -89,8 +90,7 @@ public class ViewControllers {
         mv.addObject("natural", propServ.getNaturalProperties());
         String uAegeanLogin = StringUtils.isEmpty(System.getenv(UAEGEAN_LOGIN)) ? null : System.getenv(UAEGEAN_LOGIN);
         mv.addObject("uAegeanLogin", uAegeanLogin);
-        
-        
+
         String clientID = System.getenv(CLIENT_ID);
         String redirectURI = System.getenv(REDIRECT_URI);
         String responseType = "code";
@@ -99,9 +99,9 @@ public class ViewControllers {
         mv.addObject("redirectURI", redirectURI);
         mv.addObject("responseType", responseType);
         mv.addObject("state", state);
-        boolean linkedIn = StringUtils.isEmpty(System.getenv("LINKED_IN"))?false:Boolean.parseBoolean(System.getenv("LINKED_IN"));
-        mv.addObject("linkedIn",linkedIn);
-        
+        boolean linkedIn = StringUtils.isEmpty(System.getenv("LINKED_IN")) ? false : Boolean.parseBoolean(System.getenv("LINKED_IN"));
+        mv.addObject("linkedIn", linkedIn);
+
         return mv;
     }
 
@@ -111,10 +111,16 @@ public class ViewControllers {
 
         if (cacheManager.getCache("ips").get(request.getRemoteAddr()) != null) {
             String jwt = cacheManager.getCache("tokens").get(token).get().toString();
-            Cookie cookie = new Cookie("access_token", jwt);
-            cookie.setPath("/");
-            CookieUtils.addDurationIfNotNull(cookie);
-            response.addCookie(cookie);
+
+            if (System.getenv(HTTP_HEADER) != null && Boolean.parseBoolean(System.getenv(HTTP_HEADER))) {
+                response.setHeader("Authorization", jwt);
+            } else {
+                Cookie cookie = new Cookie("access_token", jwt);
+                cookie.setPath("/");
+                CookieUtils.addDurationIfNotNull(cookie);
+                response.addCookie(cookie);
+            }
+
             return "redirect:" + System.getenv(SP_SUCCESS_PAGE);
         }
 
@@ -170,7 +176,6 @@ public class ViewControllers {
 //
 //        return "linkedInView";
 //    }
-
     @RequestMapping(value = "/linkedInResponse", method = {RequestMethod.POST, RequestMethod.GET})
     public String linkedInResponse(@RequestParam(value = "code", required = false) String code,
             @RequestParam(value = "state", required = false) String state,
@@ -216,10 +221,15 @@ public class ViewControllers {
                         .signWith(SignatureAlgorithm.HS256, SECRET.getBytes("UTF-8"))
                         .compact();
 
-                Cookie cookie = new Cookie("access_token", access_token);
-                cookie.setPath("/");
-                CookieUtils.addDurationIfNotNull(cookie);
-                httpResponse.addCookie(cookie);
+                if (System.getenv(HTTP_HEADER) != null && Boolean.parseBoolean(System.getenv(HTTP_HEADER))) {
+                    httpResponse.setHeader("Authorization", access_token);
+                } else {
+                    Cookie cookie = new Cookie("access_token", access_token);
+                    cookie.setPath("/");
+                    CookieUtils.addDurationIfNotNull(cookie);
+                    httpResponse.addCookie(cookie);
+                }
+
                 return "redirect:" + System.getenv(SP_SUCCESS_PAGE);
 
             } catch (Exception e) {

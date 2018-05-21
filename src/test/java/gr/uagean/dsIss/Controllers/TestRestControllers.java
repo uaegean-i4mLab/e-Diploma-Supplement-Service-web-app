@@ -7,14 +7,11 @@ package gr.uagean.dsIss.Controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import gr.uagean.dsIss.controllers.RestControllers;
-import gr.uagean.dsIss.model.pojo.ResponseForISS;
 import gr.uagean.dsIss.service.EidasPropertiesService;
 import gr.uagean.dsIss.utils.IssResponseParser;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import static org.hamcrest.Matchers.is;
@@ -24,7 +21,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.concurrent.ConcurrentMapCacheManager;
 import org.springframework.context.annotation.Bean;
@@ -36,6 +32,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 
@@ -108,8 +105,8 @@ public class TestRestControllers {
         ObjectMapper mapper = new ObjectMapper();
         String access_token = Jwts.builder()
                 .setSubject(mapper.writeValueAsString(jsonMap))
-//                .setIssuedAt(new Date())
-//                .setIssuer("eIDModule")
+                //                .setIssuedAt(new Date())
+                //                .setIssuer("eIDModule")
                 .signWith(SignatureAlgorithm.HS256, SECRET.getBytes("UTF-8"))
                 .compact();
 
@@ -120,4 +117,5 @@ public class TestRestControllers {
         assertEquals(cacheManager.getCache("tokens").get("token1").get(), access_token);
         assertEquals(result.getResponse().getContentAsString(), "{\"status\":\"OK\"}");
     }
+
 }

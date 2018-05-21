@@ -25,6 +25,8 @@
                 <Env.REDIRECT_URI>http://eideusmartclass.aegean.gr:9091/linkedInResponse</Env.REDIRECT_URI>
                 <Env.LINKED_IN_SECRET>7hrWS3oDQlhFEXvQ</Env.LINKED_IN_SECRET>
                 <Env.LINKED_IN>true</Env.LINKED_IN>
+                <Env.HTTP_HEADER>true</Env.HTTP_HEADER>
+                <Env.SP_SECRET>secret</Env.SP_SECRET>
                 
                 
                 
@@ -86,6 +88,61 @@
                 <exec.executable>java</exec.executable>
                 <exec.classpathScope>${classPathScope}</exec.classpathScope>
                 <skipTests>true</skipTests>
+            </properties>
+        </action>
+        <action>
+            <actionName>debug.test.single</actionName>
+            <packagings>
+                <packaging>*</packaging>
+            </packagings>
+            <goals>
+                <goal>test-compile</goal>
+                <goal>surefire:test</goal>
+            </goals>
+            <properties>
+                <test>${packageClassName}</test>
+                <forkMode>once</forkMode>
+                <maven.surefire.debug>-Xdebug -Xrunjdwp:transport=dt_socket,server=n,address=${jpda.address}</maven.surefire.debug>
+                <jpda.listen>true</jpda.listen>
+                <Env.EIDAS_PROPERTIES>CurrentFamilyName,CurrentGivenName,DateOfBirth,PersonIdentifier</Env.EIDAS_PROPERTIES>
+                <Env.SP_FAIL_PAGE>https://www.google.com</Env.SP_FAIL_PAGE>
+                <Env.SP_SUCCESS_PAGE>http://138.68.103.237/loginSuccess</Env.SP_SUCCESS_PAGE>
+                <Env.SP_LOGO>http://communities-i4mlab.aegean.gr:8080/loginapp/img/logo2.png</Env.SP_LOGO>
+                <Env.ISS_URL>http://84.205.248.180/ISSPlus/ValidateToken</Env.ISS_URL>
+                <Env.SP_ID>2</Env.SP_ID>
+                <Env.UAEGEAN_LOGIN>true</Env.UAEGEAN_LOGIN>
+                <Env.CLIENT_ID>867kszvon99qp4</Env.CLIENT_ID>
+                <Env.REDIRECT_URI>http://eideusmartclass.aegean.gr:9091/linkedInResponse</Env.REDIRECT_URI>
+                <Env.LINKED_IN_SECRET>7hrWS3oDQlhFEXvQ</Env.LINKED_IN_SECRET>
+                <Env.LINKED_IN>true</Env.LINKED_IN>
+                <Env.HTTP_HEADER>true</Env.HTTP_HEADER>
+                <Env.SP_SECRET>secret</Env.SP_SECRET>
+            </properties>
+        </action>
+        <action>
+            <actionName>test.single</actionName>
+            <packagings>
+                <packaging>*</packaging>
+            </packagings>
+            <goals>
+                <goal>test-compile</goal>
+                <goal>surefire:test</goal>
+            </goals>
+            <properties>
+                <test>${packageClassName}</test>
+                <Env.EIDAS_PROPERTIES>CurrentFamilyName,CurrentGivenName,DateOfBirth,PersonIdentifier</Env.EIDAS_PROPERTIES>
+                <Env.SP_FAIL_PAGE>https://www.google.com</Env.SP_FAIL_PAGE>
+                <Env.SP_SUCCESS_PAGE>http://138.68.103.237/loginSuccess</Env.SP_SUCCESS_PAGE>
+                <Env.SP_LOGO>http://communities-i4mlab.aegean.gr:8080/loginapp/img/logo2.png</Env.SP_LOGO>
+                <Env.ISS_URL>http://84.205.248.180/ISSPlus/ValidateToken</Env.ISS_URL>
+                <Env.SP_ID>2</Env.SP_ID>
+                <Env.UAEGEAN_LOGIN>true</Env.UAEGEAN_LOGIN>
+                <Env.SP_SECRET>secret</Env.SP_SECRET>
+                <Env.CLIENT_ID>867kszvon99qp4</Env.CLIENT_ID>
+                <Env.REDIRECT_URI>http://eideusmartclass.aegean.gr:9091/linkedInResponse</Env.REDIRECT_URI>
+                <Env.LINKED_IN_SECRET>7hrWS3oDQlhFEXvQ</Env.LINKED_IN_SECRET>
+                <Env.LINKED_IN>true</Env.LINKED_IN>
+                <Env.HTTP_HEADER>true</Env.HTTP_HEADER>
             </properties>
         </action>
     </actions>
