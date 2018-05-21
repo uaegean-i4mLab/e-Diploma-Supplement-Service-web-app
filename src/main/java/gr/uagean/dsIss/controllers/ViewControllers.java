@@ -156,20 +156,20 @@ public class ViewControllers {
         return "authfail";
     }
 
-    @RequestMapping("/linkedIn")
-    public String loginWithLinkedIn(Model model) {
-
-        String clientID = System.getenv(CLIENT_ID);
-        String redirectURI = System.getenv(REDIRECT_URI);
-        String responseType = "code";
-        String state = UUID.randomUUID().toString();
-        model.addAttribute("clientID", clientID);
-        model.addAttribute("redirectURI", redirectURI);
-        model.addAttribute("responseType", responseType);
-        model.addAttribute("state", state);
-
-        return "linkedInView";
-    }
+//    @RequestMapping("/linkedIn")
+//    public String loginWithLinkedIn(Model model) {
+//
+//        String clientID = System.getenv(CLIENT_ID);
+//        String redirectURI = System.getenv(REDIRECT_URI);
+//        String responseType = "code";
+//        String state = UUID.randomUUID().toString();
+//        model.addAttribute("clientID", clientID);
+//        model.addAttribute("redirectURI", redirectURI);
+//        model.addAttribute("responseType", responseType);
+//        model.addAttribute("state", state);
+//
+//        return "linkedInView";
+//    }
 
     @RequestMapping(value = "/linkedInResponse", method = {RequestMethod.POST, RequestMethod.GET})
     public String linkedInResponse(@RequestParam(value = "code", required = false) String code,
