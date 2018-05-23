@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package gr.uagean.dsIss.Utils;
+package gr.uagean.dsIss.utils;
 
 import gr.uagean.dsIss.model.pojo.IssAttribute;
 import gr.uagean.dsIss.utils.IssResponseParser;

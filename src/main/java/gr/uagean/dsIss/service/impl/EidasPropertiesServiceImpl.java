@@ -6,9 +6,11 @@
 package gr.uagean.dsIss.service.impl;
 
 import gr.uagean.dsIss.service.EidasPropertiesService;
+import gr.uagean.dsIss.service.ParameterService;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -18,12 +20,15 @@ import org.springframework.stereotype.Service;
 @Service
 public class EidasPropertiesServiceImpl implements EidasPropertiesService {
 
-    private final static String propertiesEnvVar = "EIDAS_PROPERTIES";
+    private final static String PROPERTIES_PARAMETERS = "EIDAS_PROPERTIES";
 
+    
+    @Autowired
+    private ParameterService paramServ;
     
     @Override
     public List<String> getEidasProperties() throws NullPointerException {
-        String properties = System.getenv().get(propertiesEnvVar);
+        String properties = paramServ.getParam(PROPERTIES_PARAMETERS);
         if (properties != null && properties.length() > 0) {
             return Arrays.stream(properties.split(",")).map(property -> {
                 switch (property) {

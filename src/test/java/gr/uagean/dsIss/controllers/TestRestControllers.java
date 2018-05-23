@@ -3,11 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package gr.uagean.dsIss.Controllers;
+package gr.uagean.dsIss.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import gr.uagean.dsIss.controllers.RestControllers;
 import gr.uagean.dsIss.service.EidasPropertiesService;
+import gr.uagean.dsIss.service.KeyStoreService;
+import gr.uagean.dsIss.service.ParameterService;
 import gr.uagean.dsIss.utils.IssResponseParser;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -32,7 +34,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 
@@ -62,6 +63,16 @@ public class TestRestControllers {
         public CacheManager cacheManager() {
             return new ConcurrentMapCacheManager("tokens");
         }
+
+        @Bean
+        public ParameterService paramServ() {
+            return Mockito.mock(ParameterService.class);
+        }
+
+        @Bean
+        public KeyStoreService keyServ() {
+            return Mockito.mock(KeyStoreService.class);
+        }
     }
 
     @Autowired
@@ -73,6 +84,9 @@ public class TestRestControllers {
     @Autowired
     private CacheManager cacheManager;
 
+    @Autowired
+    private ParameterService paramServ;
+
     @Before
     public void setup() {
         List<String> eidasProps = new ArrayList();
@@ -80,6 +94,8 @@ public class TestRestControllers {
         eidasProps.add("http://eidas.europa.eu/attributes/naturalperson/CurrentFamilyName");
         Mockito.when(propServ.getEidasProperties())
                 .thenReturn(eidasProps);
+
+        Mockito.when(paramServ.getParam("SP_SECRET")).thenReturn("secret");
     }
 
     @Test

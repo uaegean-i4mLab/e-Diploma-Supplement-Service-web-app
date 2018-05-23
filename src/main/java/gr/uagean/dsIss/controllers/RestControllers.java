@@ -5,17 +5,22 @@
  */
 package gr.uagean.dsIss.controllers;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import gr.uagean.dsIss.model.pojo.IssAttributeList;
 import gr.uagean.dsIss.model.pojo.IssErrorResponse;
 import gr.uagean.dsIss.model.pojo.ResponseForISS;
 import gr.uagean.dsIss.service.EidasPropertiesService;
+import gr.uagean.dsIss.service.KeyStoreService;
+import gr.uagean.dsIss.service.ParameterService;
 import gr.uagean.dsIss.utils.IssErrorMapper;
 import gr.uagean.dsIss.utils.IssResponseParser;
+import gr.uagean.dsIss.utils.JwtUtils;
 import gr.uagean.dsIss.utils.Wrappers;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.UnrecoverableKeyException;
 import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -39,13 +44,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class RestControllers {
 
     Logger log = LoggerFactory.getLogger(RestControllers.class);
-    private final static String SECRET = System.getenv("SP_SECRET");
 
     @Autowired
     private EidasPropertiesService propServ;
 
     @Autowired
     private CacheManager cacheManager;
+
+    @Autowired
+    private ParameterService paramServ;
+
+    @Autowired
+    private KeyStoreService keyServ;
 
     @Value("${eidas.error.consent}")
     private String EIDAS_CONSENT_ERROR;
@@ -88,15 +98,13 @@ public class RestControllers {
             }
 
             Map<String, String> jsonMap = IssResponseParser.parse(responseString);
-            ObjectMapper mapper = new ObjectMapper();
-            String access_token = Jwts.builder()
-                    .setSubject(mapper.writeValueAsString(jsonMap))
-                    .signWith(SignatureAlgorithm.HS256, SECRET.getBytes("UTF-8"))
-                    .compact();
+            String access_token = JwtUtils.getJWT(jsonMap, paramServ, keyServ);
 
             cacheManager.getCache("tokens").put(token, access_token);
             return new ResponseForISS(true);
-        } catch (IOException | IndexOutOfBoundsException e) {
+        } catch (IOException | IndexOutOfBoundsException | KeyStoreException
+                | NoSuchAlgorithmException | UnrecoverableKeyException e) {
+
             log.info("Error " + e.getStackTrace().toString());
             return new ResponseForISS(false);
         }

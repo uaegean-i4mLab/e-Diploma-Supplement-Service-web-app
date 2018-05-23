@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package gr.uaegean.dsIss.service.impl;
+package gr.uagean.dsIss.service;
 
 import gr.uagean.dsIss.service.EidasPropertiesService;
+import gr.uagean.dsIss.service.impl.EidasPropertiesServiceImpl;
 import gr.uagean.dsIss.service.impl.EidasPropertiesServiceImpl;
 import java.util.ArrayList;
 import java.util.List;

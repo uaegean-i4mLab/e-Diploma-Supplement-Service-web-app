@@ -5,6 +5,7 @@
  */
 package gr.uagean.dsIss.utils;
 
+import gr.uagean.dsIss.service.ParameterService;
 import javax.servlet.http.Cookie;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,10 +19,10 @@ public class CookieUtils {
 
     private static Logger log = LoggerFactory.getLogger(CookieUtils.class);
 
-    public static void addDurationIfNotNull(Cookie cookie) {
-        if (!StringUtils.isEmpty(System.getenv("AUTH_DURATION"))) {
+    public static void addDurationIfNotNull(Cookie cookie, ParameterService paramServ) {
+        if (!StringUtils.isEmpty(paramServ.getParam("AUTH_DURATION"))) {
             try {
-                int maxAge = Integer.parseInt(System.getenv("AUTH_DURATION"));
+                int maxAge = Integer.parseInt(paramServ.getParam("AUTH_DURATION"));
                 cookie.setMaxAge(maxAge);
             } catch (Exception e) {
                 log.info("ERROR parsing AUTH_DURATION", e);

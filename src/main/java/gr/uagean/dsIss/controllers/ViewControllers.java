@@ -5,14 +5,14 @@
  */
 package gr.uagean.dsIss.controllers;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import gr.uagean.dsIss.model.pojo.LinkedInAuthAccessToken;
 import gr.uagean.dsIss.service.CountryService;
 import gr.uagean.dsIss.service.EidasPropertiesService;
+import gr.uagean.dsIss.service.KeyStoreService;
+import gr.uagean.dsIss.service.ParameterService;
 import gr.uagean.dsIss.utils.CookieUtils;
+import gr.uagean.dsIss.utils.JwtUtils;
 import gr.uagean.dsIss.utils.LinkedInResponseParser;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import java.util.Map;
 import java.util.UUID;
 import javax.servlet.http.Cookie;
@@ -54,7 +54,8 @@ public class ViewControllers {
     final static String SP_LOGO = "SP_LOGO";
     final static String UAEGEAN_LOGIN = "UAEGEAN_LOGIN";
     final static String LINKED_IN_SECRET = "LINKED_IN_SECRET";
-    private final static String SECRET = System.getenv("SP_SECRET");
+    final static String SECRET = "SP_SECRET";
+
     final static String CLIENT_ID = "CLIENT_ID";
     final static String REDIRECT_URI = "REDIRECT_URI";
     final static String HTTP_HEADER = "HTTP_HEADER";
@@ -70,36 +71,42 @@ public class ViewControllers {
     @Autowired
     private CacheManager cacheManager;
 
+    @Autowired
+    private ParameterService paramServ;
+
+    @Autowired
+    private KeyStoreService keyServ;
+
     @RequestMapping("/login")
     public ModelAndView loginView(HttpServletRequest request) {
         UUID token = UUID.randomUUID();
         if (cacheManager.getCache("ips").get(request.getRemoteAddr()) != null) {
             cacheManager.getCache("ips").evict(request.getRemoteAddr());
         }
-        System.getenv();
+
         cacheManager.getCache("ips").put(request.getRemoteAddr(), token);
         ModelAndView mv = new ModelAndView("login");
-        mv.addObject("issUrl", System.getenv(ISS_URL));
+        mv.addObject("issUrl", paramServ.getParam(ISS_URL));
         mv.addObject("countries", countryServ.getEnabled());
         mv.addObject("token", token.toString());
-        mv.addObject("sp", System.getenv(SP_ID));
-        mv.addObject("logo", System.getenv(SP_LOGO));
-        mv.addObject("spFailPage", System.getenv(SP_FAIL_PAGE));
+        mv.addObject("sp", paramServ.getParam(SP_ID));
+        mv.addObject("logo", paramServ.getParam(SP_LOGO));
+        mv.addObject("spFailPage", paramServ.getParam(SP_FAIL_PAGE));
 
         mv.addObject("legal", propServ.getLegalProperties());
         mv.addObject("natural", propServ.getNaturalProperties());
-        String uAegeanLogin = StringUtils.isEmpty(System.getenv(UAEGEAN_LOGIN)) ? null : System.getenv(UAEGEAN_LOGIN);
+        String uAegeanLogin = StringUtils.isEmpty(paramServ.getParam(UAEGEAN_LOGIN)) ? null : paramServ.getParam(UAEGEAN_LOGIN);
         mv.addObject("uAegeanLogin", uAegeanLogin);
 
-        String clientID = System.getenv(CLIENT_ID);
-        String redirectURI = System.getenv(REDIRECT_URI);
+        String clientID = paramServ.getParam(CLIENT_ID);
+        String redirectURI = paramServ.getParam(REDIRECT_URI);
         String responseType = "code";
         String state = UUID.randomUUID().toString();
         mv.addObject("clientID", clientID);
         mv.addObject("redirectURI", redirectURI);
         mv.addObject("responseType", responseType);
         mv.addObject("state", state);
-        boolean linkedIn = StringUtils.isEmpty(System.getenv("LINKED_IN")) ? false : Boolean.parseBoolean(System.getenv("LINKED_IN"));
+        boolean linkedIn = StringUtils.isEmpty(paramServ.getParam("LINKED_IN")) ? false : Boolean.parseBoolean(paramServ.getParam("LINKED_IN"));
         mv.addObject("linkedIn", linkedIn);
 
         return mv;
@@ -112,23 +119,23 @@ public class ViewControllers {
         if (cacheManager.getCache("ips").get(request.getRemoteAddr()) != null) {
             String jwt = cacheManager.getCache("tokens").get(token).get().toString();
 
-            if (System.getenv(HTTP_HEADER) != null && Boolean.parseBoolean(System.getenv(HTTP_HEADER))) {
+            if (paramServ.getParam(HTTP_HEADER) != null && Boolean.parseBoolean(paramServ.getParam(HTTP_HEADER))) {
                 response.setHeader("Authorization", jwt);
             } else {
                 Cookie cookie = new Cookie("access_token", jwt);
                 cookie.setPath("/");
-                CookieUtils.addDurationIfNotNull(cookie);
+                CookieUtils.addDurationIfNotNull(cookie, paramServ);
                 response.addCookie(cookie);
             }
 
-            return "redirect:" + System.getenv(SP_SUCCESS_PAGE);
+            return "redirect:" + paramServ.getParam(SP_SUCCESS_PAGE);
         }
 
         Cookie cookie = new Cookie("access_token", "");
         cookie.setPath("/");
-        CookieUtils.addDurationIfNotNull(cookie);
+        CookieUtils.addDurationIfNotNull(cookie, paramServ);
         response.addCookie(cookie);
-        return "redirect:" + System.getenv(SP_FAIL_PAGE);
+        return "redirect:" + paramServ.getParam(SP_FAIL_PAGE);
     }
 
     @RequestMapping("/authfail")
@@ -157,25 +164,11 @@ public class ViewControllers {
             model.addAttribute("errorMsg", "Registration/Login Cancelled");
         }
 
-        model.addAttribute("logo", System.getenv(SP_LOGO));
-        model.addAttribute("server", System.getenv("SP_SERVER"));
+        model.addAttribute("logo", paramServ.getParam(SP_LOGO));
+        model.addAttribute("server", paramServ.getParam("SP_SERVER"));
         return "authfail";
     }
 
-//    @RequestMapping("/linkedIn")
-//    public String loginWithLinkedIn(Model model) {
-//
-//        String clientID = System.getenv(CLIENT_ID);
-//        String redirectURI = System.getenv(REDIRECT_URI);
-//        String responseType = "code";
-//        String state = UUID.randomUUID().toString();
-//        model.addAttribute("clientID", clientID);
-//        model.addAttribute("redirectURI", redirectURI);
-//        model.addAttribute("responseType", responseType);
-//        model.addAttribute("state", state);
-//
-//        return "linkedInView";
-//    }
     @RequestMapping(value = "/linkedInResponse", method = {RequestMethod.POST, RequestMethod.GET})
     public String linkedInResponse(@RequestParam(value = "code", required = false) String code,
             @RequestParam(value = "state", required = false) String state,
@@ -193,9 +186,9 @@ public class ViewControllers {
             MultiValueMap<String, String> map = new LinkedMultiValueMap<String, String>();
             map.add("grant_type", "authorization_code");
             map.add("code", code);
-            map.add("redirect_uri", System.getenv(REDIRECT_URI));
-            map.add("client_id", System.getenv(CLIENT_ID));
-            map.add("client_secret", System.getenv(LINKED_IN_SECRET));
+            map.add("redirect_uri", paramServ.getParam(REDIRECT_URI));
+            map.add("client_id", paramServ.getParam(CLIENT_ID));
+            map.add("client_secret", paramServ.getParam(LINKED_IN_SECRET));
 
             HttpEntity<MultiValueMap<String, String>> request
                     = new HttpEntity<>(map, headers);
@@ -215,22 +208,18 @@ public class ViewControllers {
             //return userResponse.getBody();
             try {
                 Map<String, String> jsonMap = LinkedInResponseParser.parse(userResponse.getBody());
-                ObjectMapper mapper = new ObjectMapper();
-                String access_token = Jwts.builder()
-                        .setSubject(mapper.writeValueAsString(jsonMap))
-                        .signWith(SignatureAlgorithm.HS256, SECRET.getBytes("UTF-8"))
-                        .compact();
+                String access_token = JwtUtils.getJWT(jsonMap, paramServ, keyServ);
 
-                if (System.getenv(HTTP_HEADER) != null && Boolean.parseBoolean(System.getenv(HTTP_HEADER))) {
+                if (paramServ.getParam(HTTP_HEADER) != null && Boolean.parseBoolean(paramServ.getParam(HTTP_HEADER))) {
                     httpResponse.setHeader("Authorization", access_token);
                 } else {
                     Cookie cookie = new Cookie("access_token", access_token);
                     cookie.setPath("/");
-                    CookieUtils.addDurationIfNotNull(cookie);
+                    CookieUtils.addDurationIfNotNull(cookie, paramServ);
                     httpResponse.addCookie(cookie);
                 }
 
-                return "redirect:" + System.getenv(SP_SUCCESS_PAGE);
+                return "redirect:" + paramServ.getParam(SP_SUCCESS_PAGE);
 
             } catch (Exception e) {
                 log.info("Exception", e);
