@@ -1,18 +1,32 @@
 version: '2'
 services:
-    issLoginWebApp:
-        container_name: issLoginWebApp
-        image: endimion13/eidas-gr-isswebapp:1.0
-        expose:
-            - 8090
+    zipcodesLogin:
+        image: endimion13/eidas-gr-isswebapp:1.9
         ports:
-            - 8090:8090
+          - 9091:8090
         environment:
-            - EIDAS_PROPERTIES=CurrentFamilyName,CurrentGivenName,DateOfBirth,PersonIdentifier
-            - SP_FAIL_PAGE=https://www.google.com
-            - SP_SUCCESS_PAGE=http://138.68.103.237/loginSuccess
-            - SP_LOGO=http://trc.aiest.org/wp-content/uploads/2013/04/university-of-the-aegean.png
-            - ISS_URL=http://84.205.248.180/ISSPlus/ValidateToken
-            - SP_ID=2
-            - SP_SECRET=secret
-            - AUTH_DURATION=1800
+           - EIDAS_PROPERTIES=CurrentFamilyName,CurrentGivenName,DateOfBirth,PersonIdentifier
+           - SP_FAIL_PAGE=http://212.205.82.117:9095/error
+           - SP_SUCCESS_PAGE=http://212.205.82.117:9095/success
+           - SP_LOGO=http://www.elta.gr/Portals/0/elta.jpg
+           - ISS_URL=http://212.205.82.117:8080/ISS2/ValidateToken
+           - SP_ID=sp1
+           - SP_SECRET=secret
+           - AUTH_DURATION=3800
+           - UAEGEAN_LOGIN=false
+           - SP_SECRET=secret
+           # - CLIENT_ID=linkedinClientId
+           # - REDIRECT_URI=http://eideusmartclass.aegean.gr:9091/linkedInResponse
+           # - LINKED_IN_SECRET=linkeinsecret
+           - LINKED_IN=false
+           - HTTP_HEADER=false
+           - ASYNC_SIGNATURE=true
+           - SP_JWT_CERT=/certificates/keystore.jks 
+           - STORE_PASS=keystorepass
+           - KEY_PASS=selfsignedpass
+           - CERT_ALIAS=selfsigned
+           - URL_ENCODED=true
+
+        volumes:
+           - /webappConfig:/webappConfig
+           - /zipcodeCertificates:/certificates

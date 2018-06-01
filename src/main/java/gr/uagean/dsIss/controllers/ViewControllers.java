@@ -59,6 +59,7 @@ public class ViewControllers {
     final static String CLIENT_ID = "CLIENT_ID";
     final static String REDIRECT_URI = "REDIRECT_URI";
     final static String HTTP_HEADER = "HTTP_HEADER";
+    final static String URL_ENCODED = "URL_ENCODED";
 
     final static Logger log = LoggerFactory.getLogger(ViewControllers.class);
 
@@ -122,12 +123,17 @@ public class ViewControllers {
             if (paramServ.getParam(HTTP_HEADER) != null && Boolean.parseBoolean(paramServ.getParam(HTTP_HEADER))) {
                 response.setHeader("Authorization", jwt);
             } else {
-                Cookie cookie = new Cookie("access_token", jwt);
-                cookie.setPath("/");
-                CookieUtils.addDurationIfNotNull(cookie, paramServ);
-                response.addCookie(cookie);
-            }
 
+                if (paramServ.getParam(URL_ENCODED) != null && Boolean.parseBoolean(paramServ.getParam(URL_ENCODED))) {
+                    return "redirect:" + paramServ.getParam(SP_SUCCESS_PAGE) + "?login=" + jwt;
+                } else {
+                    Cookie cookie = new Cookie("access_token", jwt);
+                    cookie.setPath("/");
+                    CookieUtils.addDurationIfNotNull(cookie, paramServ);
+                    response.addCookie(cookie);
+
+                }
+            }
             return "redirect:" + paramServ.getParam(SP_SUCCESS_PAGE);
         }
 

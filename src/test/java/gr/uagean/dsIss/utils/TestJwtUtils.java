@@ -9,7 +9,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import gr.uagean.dsIss.service.KeyStoreService;
 import gr.uagean.dsIss.service.ParameterService;
 import gr.uagean.dsIss.service.impl.KeyStoreServiceImpl;
-import gr.uagean.dsIss.utils.JwtUtils;
 import io.jsonwebtoken.Jwts;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
