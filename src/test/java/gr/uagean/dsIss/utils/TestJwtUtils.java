@@ -61,7 +61,7 @@ public class TestJwtUtils {
         Map<String, String> jsonMap = new HashMap<>();
         jsonMap.put("name", "nikos");
 
-        String json = JwtUtils.getJWT(jsonMap, paramServ, keyServ);
+        String json = JwtUtils.getJWT(jsonMap, paramServ, keyServ,"origin");
         assertEquals(true, true);
     }
 
@@ -70,12 +70,17 @@ public class TestJwtUtils {
             KeyStoreException, NoSuchAlgorithmException, NoSuchAlgorithmException, UnrecoverableKeyException {
         Map<String, String> jsonMap = new HashMap<>();
         jsonMap.put("name", "nikos");
-        String compactJws = JwtUtils.getJWT(jsonMap, paramServ, keyServ);
+        String compactJws = JwtUtils.getJWT(jsonMap, paramServ, keyServ,"myOrigin");
         PublicKey key = keyServ.getJWTPublicKey();
         //term signing key here is confusing... we decrypt with the public key ;)
         String decryptedSubject = Jwts.parser().setSigningKey(key).parseClaimsJws(compactJws).getBody().getSubject();
+        String decryptedOriginClaim = Jwts.parser().setSigningKey(key).parseClaimsJws(compactJws).getBody().get("origin", String.class);
+        
         assertEquals(decryptedSubject,"{\"name\":\"nikos\"}");
+        assertEquals(decryptedOriginClaim,"myOrigin");
+        
 
     }
+ 
 
 }

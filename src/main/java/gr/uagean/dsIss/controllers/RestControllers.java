@@ -5,7 +5,6 @@
  */
 package gr.uagean.dsIss.controllers;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import gr.uagean.dsIss.model.pojo.IssAttributeList;
 import gr.uagean.dsIss.model.pojo.IssErrorResponse;
 import gr.uagean.dsIss.model.pojo.ResponseForISS;
@@ -17,7 +16,6 @@ import gr.uagean.dsIss.utils.IssResponseParser;
 import gr.uagean.dsIss.utils.JwtUtils;
 import gr.uagean.dsIss.utils.Wrappers;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.UnrecoverableKeyException;
@@ -98,7 +96,8 @@ public class RestControllers {
             }
 
             Map<String, String> jsonMap = IssResponseParser.parse(responseString);
-            String access_token = JwtUtils.getJWT(jsonMap, paramServ, keyServ);
+            String origin = jsonMap.get("eid").contains("aegean")?"UAegean":"eIDAS";
+            String access_token = JwtUtils.getJWT(jsonMap, paramServ, keyServ,origin);
 
             cacheManager.getCache("tokens").put(token, access_token);
             return new ResponseForISS(true);

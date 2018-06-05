@@ -12,7 +12,6 @@ import gr.uagean.dsIss.service.CountryService;
 import gr.uagean.dsIss.service.EidasPropertiesService;
 import gr.uagean.dsIss.service.KeyStoreService;
 import gr.uagean.dsIss.service.ParameterService;
-import gr.uagean.dsIss.service.impl.KeyStoreServiceImpl;
 import gr.uagean.dsIss.utils.IssResponseParser;
 import gr.uagean.dsIss.utils.JwtUtils;
 import io.jsonwebtoken.Jwts;
@@ -158,7 +157,7 @@ public class TestViewControllers {
     public void testISSwithHeaderJWT() throws Exception {
         String responseString = "{\"http://eidas.europa.eu/attributes/naturalperson/CurrentGivenName\":{\"value\":\"javier\",\"complex\":\"0\",\"required\":\"1\"},\"http://eidas.europa.eu/attributes/naturalperson/CurrentFamilyName\":{\"value\":\"Garcia\",\"complex\":\"0\",\"required\":\"1\"},\"http://eidas.europa.eu/attributes/naturalperson/DateOfBirth\":{\"value\":\"1965-01-01\",\"complex\":\"0\",\"required\":\"1\"},\"http://eidas.europa.eu/attributes/naturalperson/PersonIdentifier\":{\"value\":\"GR/GR/12345\",\"complex\":\"0\",\"required\":\"1\"}}";
         Map<String, String> jsonMap = IssResponseParser.parse(responseString);
-        String access_token = JwtUtils.getJWT(jsonMap, paramServ, keyServ);
+        String access_token = JwtUtils.getJWT(jsonMap, paramServ, keyServ,"eIDAS");
 
         Mockito.when(paramServ.getParam("HTTP_HEADER")).thenReturn("true");
 
@@ -178,7 +177,7 @@ public class TestViewControllers {
     public void testISSwithCookieJWT() throws Exception {
         String responseString = "{\"http://eidas.europa.eu/attributes/naturalperson/CurrentGivenName\":{\"value\":\"javier\",\"complex\":\"0\",\"required\":\"1\"},\"http://eidas.europa.eu/attributes/naturalperson/CurrentFamilyName\":{\"value\":\"Garcia\",\"complex\":\"0\",\"required\":\"1\"},\"http://eidas.europa.eu/attributes/naturalperson/DateOfBirth\":{\"value\":\"1965-01-01\",\"complex\":\"0\",\"required\":\"1\"},\"http://eidas.europa.eu/attributes/naturalperson/PersonIdentifier\":{\"value\":\"GR/GR/12345\",\"complex\":\"0\",\"required\":\"1\"}}";
         Map<String, String> jsonMap = IssResponseParser.parse(responseString);
-        String access_token = JwtUtils.getJWT(jsonMap, paramServ, keyServ);
+        String access_token = JwtUtils.getJWT(jsonMap, paramServ, keyServ,"eIDAS");
 
         Mockito.when(paramServ.getParam("HTTP_HEADER")).thenReturn("false");
 

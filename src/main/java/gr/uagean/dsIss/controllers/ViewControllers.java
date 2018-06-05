@@ -214,7 +214,7 @@ public class ViewControllers {
             //return userResponse.getBody();
             try {
                 Map<String, String> jsonMap = LinkedInResponseParser.parse(userResponse.getBody());
-                String access_token = JwtUtils.getJWT(jsonMap, paramServ, keyServ);
+                String access_token = JwtUtils.getJWT(jsonMap, paramServ, keyServ,"linkedIn");
 
                 if (paramServ.getParam(HTTP_HEADER) != null && Boolean.parseBoolean(paramServ.getParam(HTTP_HEADER))) {
                     httpResponse.setHeader("Authorization", access_token);

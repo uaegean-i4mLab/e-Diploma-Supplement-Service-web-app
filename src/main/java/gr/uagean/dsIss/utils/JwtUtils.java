@@ -24,12 +24,14 @@ import java.util.Map;
  */
 public class JwtUtils {
 
-    public static String getJWT(Map<String, String> jsonMap, ParameterService paramServ, KeyStoreService keyServ)
+    public static String getJWT(Map<String, String> jsonMap, ParameterService paramServ, KeyStoreService keyServ, String origin)
             throws JsonProcessingException, UnsupportedEncodingException, KeyStoreException,
             NoSuchAlgorithmException, NoSuchAlgorithmException, UnrecoverableKeyException {
         ObjectMapper mapper = new ObjectMapper();
+        
         JwtBuilder builder = Jwts.builder()
-                .setSubject(mapper.writeValueAsString(jsonMap));
+                .setSubject(mapper.writeValueAsString(jsonMap))
+                .claim("origin", origin);
 
         if (paramServ.getParam("ASYNC_SIGNATURE") != null && Boolean.parseBoolean(paramServ.getParam("ASYNC_SIGNATURE"))) {
             builder.signWith(SignatureAlgorithm.RS256, keyServ.getJWTSigningKey());
