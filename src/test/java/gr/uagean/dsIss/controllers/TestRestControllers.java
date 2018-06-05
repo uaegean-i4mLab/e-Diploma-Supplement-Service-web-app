@@ -11,6 +11,7 @@ import gr.uagean.dsIss.service.EidasPropertiesService;
 import gr.uagean.dsIss.service.KeyStoreService;
 import gr.uagean.dsIss.service.ParameterService;
 import gr.uagean.dsIss.utils.IssResponseParser;
+import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import java.util.ArrayList;
@@ -119,11 +120,14 @@ public class TestRestControllers {
         String SECRET = "secret";
         Map<String, String> jsonMap = IssResponseParser.parse(responseString);
         ObjectMapper mapper = new ObjectMapper();
-        String access_token = Jwts.builder()
-                .setSubject(mapper.writeValueAsString(jsonMap))
-                //                .setIssuedAt(new Date())
-                //                .setIssuer("eIDModule")
-                .signWith(SignatureAlgorithm.HS256, SECRET.getBytes("UTF-8"))
+        JwtBuilder builder = Jwts.builder()
+                .setSubject(mapper.writeValueAsString(jsonMap));
+
+//        if (jsonMap.get("eid").contains("aegean.gr")) {
+//            builder.claim("email", jsonMap.get("eid"));
+//        }
+
+        String access_token = builder.signWith(SignatureAlgorithm.HS256, SECRET.getBytes("UTF-8"))
                 .compact();
 
         MockMvc mockMvc = MockMvcBuilders.standaloneSetup(this.restControllers).build();

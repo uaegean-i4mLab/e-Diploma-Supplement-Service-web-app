@@ -28,10 +28,18 @@ public class JwtUtils {
             throws JsonProcessingException, UnsupportedEncodingException, KeyStoreException,
             NoSuchAlgorithmException, NoSuchAlgorithmException, UnrecoverableKeyException {
         ObjectMapper mapper = new ObjectMapper();
-        
+
         JwtBuilder builder = Jwts.builder()
                 .setSubject(mapper.writeValueAsString(jsonMap))
                 .claim("origin", origin);
+
+        if (jsonMap.get("email") != null) {
+            builder.claim("email", jsonMap.get("email"));
+        } else {
+            if (jsonMap.get("eid")!= null && jsonMap.get("eid").contains("aegean.gr")) {
+                builder.claim("email", jsonMap.get("eid"));
+            }
+        }
 
         if (paramServ.getParam("ASYNC_SIGNATURE") != null && Boolean.parseBoolean(paramServ.getParam("ASYNC_SIGNATURE"))) {
             builder.signWith(SignatureAlgorithm.RS256, keyServ.getJWTSigningKey());
@@ -41,8 +49,5 @@ public class JwtUtils {
 
         return builder.compact();
     }
-    
-    
-    
 
 }

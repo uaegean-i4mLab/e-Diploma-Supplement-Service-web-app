@@ -208,13 +208,14 @@ public class ViewControllers {
             headersUser.set("Authorization", "Bearer " + response.getBody().getAccess_token());
             HttpEntity<String> entity = new HttpEntity<String>("", headersUser);
             ResponseEntity<String> userResponse
-                    = restTemplate.exchange("https://www.linkedin.com/v1/people/~?format=json", HttpMethod.GET, entity, String.class); //user details https://www.linkedin.com/v1/people/~
+                    = restTemplate.exchange("https://www.linkedin.com/v1/people/~:(id,firstName,lastName,email-address)?format=json",
+                            HttpMethod.GET, entity, String.class); //user details https://www.linkedin.com/v1/people/~
 
             //return "token " + response.getBody().getAccess_token() + " , expires " + response.getBody().getExpires_in();
             //return userResponse.getBody();
             try {
                 Map<String, String> jsonMap = LinkedInResponseParser.parse(userResponse.getBody());
-                String access_token = JwtUtils.getJWT(jsonMap, paramServ, keyServ,"linkedIn");
+                String access_token = JwtUtils.getJWT(jsonMap, paramServ, keyServ, "linkedIn");
 
                 if (paramServ.getParam(HTTP_HEADER) != null && Boolean.parseBoolean(paramServ.getParam(HTTP_HEADER))) {
                     httpResponse.setHeader("Authorization", access_token);
@@ -223,6 +224,21 @@ public class ViewControllers {
                     cookie.setPath("/");
                     CookieUtils.addDurationIfNotNull(cookie, paramServ);
                     httpResponse.addCookie(cookie);
+                }
+
+                if (paramServ.getParam(HTTP_HEADER) != null && Boolean.parseBoolean(paramServ.getParam(HTTP_HEADER))) {
+                    httpResponse.setHeader("Authorization", access_token);
+                } else {
+
+                    if (paramServ.getParam(URL_ENCODED) != null && Boolean.parseBoolean(paramServ.getParam(URL_ENCODED))) {
+                        return "redirect:" + paramServ.getParam(SP_SUCCESS_PAGE) + "?login=" + access_token;
+                    } else {
+                        Cookie cookie = new Cookie("access_token", access_token);
+                        cookie.setPath("/");
+                        CookieUtils.addDurationIfNotNull(cookie, paramServ);
+                        httpResponse.addCookie(cookie);
+
+                    }
                 }
 
                 return "redirect:" + paramServ.getParam(SP_SUCCESS_PAGE);

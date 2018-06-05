@@ -15,17 +15,27 @@ public class LinkedInUser {
     private String headline;
     private String id;
     private String lastName;
+    private String emailAddress; // private String emailAddress;
     private SiteStandardProfileRequest siteStandardProfileRequest;
 
     public LinkedInUser() {
     }
 
-    public LinkedInUser(String firstName, String headline, String id, String lastName, SiteStandardProfileRequest siteStandardProfileRequest) {
+    public LinkedInUser(String firstName, String headline, String id, String lastName, SiteStandardProfileRequest siteStandardProfileRequest, String email) {
         this.firstName = firstName;
         this.headline = headline;
         this.id = id;
         this.lastName = lastName;
         this.siteStandardProfileRequest = siteStandardProfileRequest;
+        this.emailAddress = email;
+    }
+
+    public String getEmailAddress() {
+        return emailAddress;
+    }
+
+    public void setEmailAddress(String emailAddress) {
+        this.emailAddress = emailAddress;
     }
 
     public String getFirstName() {

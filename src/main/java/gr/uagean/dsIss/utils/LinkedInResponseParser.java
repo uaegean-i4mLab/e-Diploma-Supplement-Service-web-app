@@ -29,6 +29,7 @@ public class LinkedInResponseParser {
         result.put("lastName",user.getLastName());
         result.put("currentGivenName",user.getFirstName());
         result.put("currentFamilyName",user.getLastName());
+        result.put("email",user.getEmailAddress());
 
         return result;
     }
