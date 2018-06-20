@@ -48,6 +48,7 @@ import org.thymeleaf.util.StringUtils;
 public class ViewControllers {
 
     final static String ISS_URL = "ISS_URL";
+    final static String ISS_PRE_URL="ISS_PRE_URL";
     final static String SP_FAIL_PAGE = "SP_FAIL_PAGE";
     final static String SP_SUCCESS_PAGE = "SP_SUCCESS_PAGE";
     final static String SP_ID = "SP_ID";
@@ -88,6 +89,7 @@ public class ViewControllers {
         cacheManager.getCache("ips").put(request.getRemoteAddr(), token);
         ModelAndView mv = new ModelAndView("login");
         mv.addObject("issUrl", paramServ.getParam(ISS_URL));
+         mv.addObject("issPreUrl", paramServ.getParam(ISS_PRE_URL));
         mv.addObject("countries", countryServ.getEnabled());
         mv.addObject("token", token.toString());
         mv.addObject("sp", paramServ.getParam(SP_ID));

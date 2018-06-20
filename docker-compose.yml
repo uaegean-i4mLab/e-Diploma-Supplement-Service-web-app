@@ -10,6 +10,7 @@ services:
            - SP_SUCCESS_PAGE=http://212.205.82.117:9095/success
            - SP_LOGO=http://www.elta.gr/Portals/0/elta.jpg
            - ISS_URL=http://212.205.82.117:8080/ISS2/ValidateToken
+           - ISS_PRE_URL=http://212.205.82.117:8080/ISS2/ValidateToken
            - SP_ID=sp1
            - SP_SECRET=secret
            - AUTH_DURATION=3800
