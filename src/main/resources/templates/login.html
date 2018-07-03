@@ -12,7 +12,9 @@
         <!-- Compiled and minified CSS -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css"></link>
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"></link>
-        <link rel="stylesheet" href="css/main.css"></link>
+        <!--<link rel="stylesheet" href="/eidas/css/main.css"></link>-->
+        <link rel="stylesheet" href="/css/main.css"></link>
+
         <link rel="icon"
               type="image/x-icon"
               href="favicon.ico"></link>
@@ -53,7 +55,7 @@
                         </div>
 
                         <div class="row instructions">
-                            <div  class="col s12 flow-text hide-on-large-only">
+                            <div  id="mobile" class="col s12 flow-text hide-on-large-only">
                                 <p>
                                     <b>Identify with eIDAS eID:</b> You will now be directed to the eIDAS Network to securely identify and trustly 
                                     provide us your main identity attributes. Review the identification attributes that will be requested  <a href="#modal1">HERE</a>
@@ -72,8 +74,10 @@
                                         <select id="countrySelection" class="icons">
                                             <th:block th:each="country : ${countries}">
                                                 <div th:switch="${country.code}"> 
-                                                    <option th:case="GR" selected="true" th:value="${country.code}" th:attr="data-icon= 'img/flags/' + ${country.name} + '_flag.gif'" th:text="${#strings.toUpperCase(country.name)}"></option>
-                                                    <option th:case="*"  th:value="${country.code}" th:attr="data-icon= 'img/flags/' + ${country.name} + '_flag.gif'" th:text="${#strings.toUpperCase(country.name)}"></option>
+<!--                                                    <option th:case="GR" selected="true" th:value="${country.code}" th:attr="data-icon= '/eidas/img/flags/' + ${country.name} + '_flag.gif'" th:text="${#strings.toUpperCase(country.name)}"></option>
+                                                    <option th:case="*"  th:value="${country.code}" th:attr="data-icon= '/eidas/img/flags/' + ${country.name} + '_flag.gif'" th:text="${#strings.toUpperCase(country.name)}"></option>-->
+                                                    <option th:case="GR" selected="true" th:value="${country.code}" th:attr="data-icon= '/img/flags/' + ${country.name} + '_flag.gif'" th:text="${#strings.toUpperCase(country.name)}"></option>
+                                                    <option th:case="*"  th:value="${country.code}" th:attr="data-icon= '/img/flags/' + ${country.name} + '_flag.gif'" th:text="${#strings.toUpperCase(country.name)}"></option>
                                                 </div>
 
                                             </th:block>
@@ -103,9 +107,11 @@
 
                                 <p th:if="${linkedIn}"> 
                                     <!--<span style="color:#446eff;font-weight: bold;"></span>-->
+                                                                              <!--src='/eidas/img/linkedIn.png'-->
+
                                     <b>Identify with LinkedIn:</b> 
                                     <img  onclick="linkedInClick()" 
-                                          src='img/linkedIn.png'
+                                          src='/img/linkedIn.png'
                                           style="
                                           cursor: pointer;
                                           width: 14rem;
@@ -122,7 +128,7 @@
 
 
                             </div>
-                            <div  class="col s12  hide-on-med-and-down ">
+                            <div   class="col s12  hide-on-med-and-down ">
                                 <p>
                                     <b>Identify with eIDAS eID:</b> You will now be directed to the eIDAS Network to securely identify and trustly 
                                     provide us your main identity attributes. Review the identification attributes that will be requested  <a href="#modal1">HERE</a>
@@ -141,8 +147,10 @@
                                         <select id="countrySelection2" class="icons">
                                             <th:block th:each="country : ${countries}">
                                                 <div th:switch="${country.code}"> 
-                                                    <option th:case="GR" selected="true" th:value="${country.code}" th:attr="data-icon= 'img/flags/' + ${country.name} + '_flag.gif'" th:text="${#strings.toUpperCase(country.name)}"></option>
-                                                    <option th:case="*"  th:value="${country.code}" th:attr="data-icon= 'img/flags/' + ${country.name} + '_flag.gif'" th:text="${#strings.toUpperCase(country.name)}"></option>
+<!--                                                    <option th:case="GR" selected="true" th:value="${country.code}" th:attr="data-icon= '/eidas/img/flags/' + ${country.name} + '_flag.gif'" th:text="${#strings.toUpperCase(country.name)}"></option>
+                                                    <option th:case="*"  th:value="${country.code}" th:attr="data-icon= '/eidas/img/flags/' + ${country.name} + '_flag.gif'" th:text="${#strings.toUpperCase(country.name)}"></option>-->
+                                                    <option th:case="GR" selected="true" th:value="${country.code}" th:attr="data-icon= '/img/flags/' + ${country.name} + '_flag.gif'" th:text="${#strings.toUpperCase(country.name)}"></option>
+                                                    <option th:case="*"  th:value="${country.code}" th:attr="data-icon= '/img/flags/' + ${country.name} + '_flag.gif'" th:text="${#strings.toUpperCase(country.name)}"></option>
                                                 </div>
 
                                             </th:block>
@@ -174,7 +182,7 @@
                                     <!--<span style="color:#446eff;font-weight: bold;"></span>-->
                                     <b>Identify with LinkedIn:</b>  
                                     <img  onclick="linkedInClick()" 
-                                          src='img/linkedIn.png'
+                                          src='/img/linkedIn.png'
                                           style="
                                           cursor: pointer;
                                           width: 14rem;
@@ -239,7 +247,7 @@
                                         });
                                         });
                                         function onNextClick() {
-                                        let countrySelector = $("#countrySelection").is(":visible")?$("#countrySelection"):$("#countrySelection2");
+                                        let countrySelector = $("#mobile").is(":visible")?$("#countrySelection"):$("#countrySelection2");
                                         let country = countrySelector.val();
                                         let iss = [[${issPreUrl}]];
                                         if(country === "GR"){
