@@ -48,7 +48,7 @@ import org.thymeleaf.util.StringUtils;
 public class ViewControllers {
 
     final static String ISS_URL = "ISS_URL";
-    final static String ISS_PRE_URL="ISS_PRE_URL";
+    final static String ISS_PRE_URL = "ISS_PRE_URL";
     final static String SP_FAIL_PAGE = "SP_FAIL_PAGE";
     final static String SP_SUCCESS_PAGE = "SP_SUCCESS_PAGE";
     final static String SP_ID = "SP_ID";
@@ -56,7 +56,7 @@ public class ViewControllers {
     final static String UAEGEAN_LOGIN = "UAEGEAN_LOGIN";
     final static String LINKED_IN_SECRET = "LINKED_IN_SECRET";
     final static String SECRET = "SP_SECRET";
-
+    final static String URL_PREFIX = "URL_PREFIX";
     final static String CLIENT_ID = "CLIENT_ID";
     final static String REDIRECT_URI = "REDIRECT_URI";
     final static String HTTP_HEADER = "HTTP_HEADER";
@@ -89,17 +89,20 @@ public class ViewControllers {
         cacheManager.getCache("ips").put(request.getRemoteAddr(), token);
         ModelAndView mv = new ModelAndView("login");
         mv.addObject("issUrl", paramServ.getParam(ISS_URL));
-         mv.addObject("issPreUrl", paramServ.getParam(ISS_PRE_URL));
+        mv.addObject("issPreUrl", paramServ.getParam(ISS_PRE_URL));
         mv.addObject("countries", countryServ.getEnabled());
         mv.addObject("token", token.toString());
         mv.addObject("sp", paramServ.getParam(SP_ID));
         mv.addObject("logo", paramServ.getParam(SP_LOGO));
         mv.addObject("spFailPage", paramServ.getParam(SP_FAIL_PAGE));
-
         mv.addObject("legal", propServ.getLegalProperties());
         mv.addObject("natural", propServ.getNaturalProperties());
+
         String uAegeanLogin = StringUtils.isEmpty(paramServ.getParam(UAEGEAN_LOGIN)) ? null : paramServ.getParam(UAEGEAN_LOGIN);
         mv.addObject("uAegeanLogin", uAegeanLogin);
+
+        String urlPrefix = StringUtils.isEmpty(paramServ.getParam(URL_PREFIX)) ? "" : paramServ.getParam(URL_PREFIX);
+        mv.addObject("urlPrefix", urlPrefix);
 
         String clientID = paramServ.getParam(CLIENT_ID);
         String redirectURI = paramServ.getParam(REDIRECT_URI);
@@ -172,6 +175,8 @@ public class ViewControllers {
             model.addAttribute("errorMsg", "Registration/Login Cancelled");
         }
 
+        String urlPrefix = StringUtils.isEmpty(paramServ.getParam(URL_PREFIX)) ? "" : paramServ.getParam(URL_PREFIX);
+        model.addAttribute("urlPrefix", urlPrefix);
         model.addAttribute("logo", paramServ.getParam(SP_LOGO));
         model.addAttribute("server", paramServ.getParam("SP_SERVER"));
         return "authfail";

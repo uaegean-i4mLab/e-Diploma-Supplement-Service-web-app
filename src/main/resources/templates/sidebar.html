@@ -45,7 +45,7 @@
 
                     <div class="col s4  l12">
                         <a target="_blank" href="https://docs.google.com/document/d/1MeRO2ZI97FC_H12WQiOdnMgvfWJ6i6YGTZ6KGUnD4VU/edit?usp=sharing">
-                            <img src="/img/instructions.png" style="
+                            <img th:src="${urlPrefix + '/img/instructions.png'}" src="/eidas/img//instructions.png" style="
                                  max-width:  60px;
                                  margin-left: 10%;
                                  "/>
@@ -62,7 +62,7 @@
                     <div class="col s4  l12">
                         <a target="_blank" href="https://docs.google.com/document/d/1UniQ7VVGB_bPFyDLLraBghzS4_Jls-hYcuLJCol13Is/edit">
                             <!--<div id="eIDASbtn"></div>-->
-                            <img src="/img/eidas_logo2.jpg" style="max-width: 56px;
+                            <img th:src="${urlPrefix + 'img//eidas_logo2.jpg'}" src="/eidas/img//eidas_logo2.jpg" style="max-width: 56px;
                                  margin-left: 10%;"/>
                             <p style="margin-top: 0;
                                margin-left: 0.7rem;">@eID_EU</p>

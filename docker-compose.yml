@@ -27,6 +27,8 @@ services:
            - KEY_PASS=selfsignedpass
            - CERT_ALIAS=selfsigned
            - URL_ENCODED=true
+           - URL_PREFIX=/eidas
+           - SP_SERVER=http://testsp.com
 
         volumes:
            - /webappConfig:/webappConfig

@@ -13,7 +13,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css"></link>
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"></link>
         <!--<link rel="stylesheet" href="/eidas/css/main.css"></link>-->
-        <link rel="stylesheet" href="css/main.css"></link>
+        <link rel="stylesheet" th:href="${urlPrefix + '/css/main.css'}"></link>
 
         <link rel="icon"
               type="image/x-icon"
@@ -76,8 +76,8 @@
                                                 <div th:switch="${country.code}"> 
 <!--                                                    <option th:case="GR" selected="true" th:value="${country.code}" th:attr="data-icon= '/eidas/img/flags/' + ${country.name} + '_flag.gif'" th:text="${#strings.toUpperCase(country.name)}"></option>
                                                     <option th:case="*"  th:value="${country.code}" th:attr="data-icon= '/eidas/img/flags/' + ${country.name} + '_flag.gif'" th:text="${#strings.toUpperCase(country.name)}"></option>-->
-                                                    <option th:case="GR" selected="true" th:value="${country.code}" th:attr="data-icon= '/img/flags/' + ${country.name} + '_flag.gif'" th:text="${#strings.toUpperCase(country.name)}"></option>
-                                                    <option th:case="*"  th:value="${country.code}" th:attr="data-icon= '/img/flags/' + ${country.name} + '_flag.gif'" th:text="${#strings.toUpperCase(country.name)}"></option>
+                                                    <option th:case="GR" selected="true" th:value="${country.code}" th:attr="data-icon= ${urlPrefix} + '/img/flags/' + ${country.name} + '_flag.gif'" th:text="${#strings.toUpperCase(country.name)}"></option>
+                                                    <option th:case="*"  th:value="${country.code}" th:attr="data-icon= ${urlPrefix} + '/img/flags/' + ${country.name} + '_flag.gif'" th:text="${#strings.toUpperCase(country.name)}"></option>
                                                 </div>
 
                                             </th:block>
@@ -111,6 +111,7 @@
 
                                     <b>Identify with LinkedIn:</b> 
                                     <img  onclick="linkedInClick()" 
+                                          th:src="${urlPrefix + '/img/linkedIn.png'}"
                                           src='/img/linkedIn.png'
                                           style="
                                           cursor: pointer;
@@ -149,8 +150,8 @@
                                                 <div th:switch="${country.code}"> 
 <!--                                                    <option th:case="GR" selected="true" th:value="${country.code}" th:attr="data-icon= '/eidas/img/flags/' + ${country.name} + '_flag.gif'" th:text="${#strings.toUpperCase(country.name)}"></option>
                                                     <option th:case="*"  th:value="${country.code}" th:attr="data-icon= '/eidas/img/flags/' + ${country.name} + '_flag.gif'" th:text="${#strings.toUpperCase(country.name)}"></option>-->
-                                                    <option th:case="GR" selected="true" th:value="${country.code}" th:attr="data-icon= '/img/flags/' + ${country.name} + '_flag.gif'" th:text="${#strings.toUpperCase(country.name)}"></option>
-                                                    <option th:case="*"  th:value="${country.code}" th:attr="data-icon= '/img/flags/' + ${country.name} + '_flag.gif'" th:text="${#strings.toUpperCase(country.name)}"></option>
+                                                    <option th:case="GR" selected="true" th:value="${country.code}" th:attr="data-icon= ${urlPrefix} + '/img/flags/' + ${country.name} + '_flag.gif'" th:text="${#strings.toUpperCase(country.name)}"></option>
+                                                    <option th:case="*"  th:value="${country.code}" th:attr="data-icon= ${urlPrefix} + '/img/flags/' + ${country.name} + '_flag.gif'" th:text="${#strings.toUpperCase(country.name)}"></option>
                                                 </div>
 
                                             </th:block>
@@ -182,6 +183,7 @@
                                     <!--<span style="color:#446eff;font-weight: bold;"></span>-->
                                     <b>Identify with LinkedIn:</b>  
                                     <img  onclick="linkedInClick()" 
+                                          th:src="${urlPrefix + '/img/linkedIn.png' }"
                                           src='/img/linkedIn.png'
                                           style="
                                           cursor: pointer;
