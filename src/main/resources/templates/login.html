@@ -10,7 +10,8 @@
         <meta name="author" content=""></meta>
         <title>Create a new account</title>
         <!-- Compiled and minified CSS -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css"></link>
+        <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css"></link>-->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css"/>
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"></link>
         <!--<link rel="stylesheet" href="/eidas/css/main.css"></link>-->
         <link rel="stylesheet" th:href="${urlPrefix + '/css/main.css'}"></link>
@@ -58,7 +59,7 @@
                             <div  id="mobile" class="col s12 flow-text hide-on-large-only">
                                 <p>
                                     <b>Identify with eIDAS eID:</b> You will now be directed to the eIDAS Network to securely identify and trustly 
-                                    provide us your main identity attributes. Review the identification attributes that will be requested  <a href="#modal1">HERE</a>
+                                    provide us your main identity attributes. Review the identification attributes that will be requested  <a class="modal-trigger" href="#modal1">HERE</a>
                                 </p>
                                 <p>
                                     The eIDAS Network will provide us with those attributes from the attribute provider you will suggest (eID-EU)
@@ -74,8 +75,8 @@
                                         <select id="countrySelection" class="icons">
                                             <th:block th:each="country : ${countries}">
                                                 <div th:switch="${country.code}"> 
-<!--                                                    <option th:case="GR" selected="true" th:value="${country.code}" th:attr="data-icon= '/eidas/img/flags/' + ${country.name} + '_flag.gif'" th:text="${#strings.toUpperCase(country.name)}"></option>
-                                                    <option th:case="*"  th:value="${country.code}" th:attr="data-icon= '/eidas/img/flags/' + ${country.name} + '_flag.gif'" th:text="${#strings.toUpperCase(country.name)}"></option>-->
+                                                    <!--                                                    <option th:case="GR" selected="true" th:value="${country.code}" th:attr="data-icon= '/eidas/img/flags/' + ${country.name} + '_flag.gif'" th:text="${#strings.toUpperCase(country.name)}"></option>
+                                                                                                        <option th:case="*"  th:value="${country.code}" th:attr="data-icon= '/eidas/img/flags/' + ${country.name} + '_flag.gif'" th:text="${#strings.toUpperCase(country.name)}"></option>-->
                                                     <option th:case="GR" selected="true" th:value="${country.code}" th:attr="data-icon= ${urlPrefix} + '/img/flags/' + ${country.name} + '_flag.gif'" th:text="${#strings.toUpperCase(country.name)}"></option>
                                                     <option th:case="*"  th:value="${country.code}" th:attr="data-icon= ${urlPrefix} + '/img/flags/' + ${country.name} + '_flag.gif'" th:text="${#strings.toUpperCase(country.name)}"></option>
                                                 </div>
@@ -107,7 +108,7 @@
 
                                 <p th:if="${linkedIn}"> 
                                     <!--<span style="color:#446eff;font-weight: bold;"></span>-->
-                                                                              <!--src='/eidas/img/linkedIn.png'-->
+                                    <!--src='/eidas/img/linkedIn.png'-->
 
                                     <b>Identify with LinkedIn:</b> 
                                     <img  onclick="linkedInClick()" 
@@ -132,7 +133,7 @@
                             <div   class="col s12  hide-on-med-and-down ">
                                 <p>
                                     <b>Identify with eIDAS eID:</b> You will now be directed to the eIDAS Network to securely identify and trustly 
-                                    provide us your main identity attributes. Review the identification attributes that will be requested  <a href="#modal1">HERE</a>
+                                    provide us your main identity attributes. Review the identification attributes that will be requested  <a  class="modal-trigger" href="#modal1">HERE</a>
                                 </p>
                                 <p>
                                     The eIDAS Network will provide us with those attributes from the attribute provider you will suggest (eID-EU)
@@ -148,8 +149,8 @@
                                         <select id="countrySelection2" class="icons">
                                             <th:block th:each="country : ${countries}">
                                                 <div th:switch="${country.code}"> 
-<!--                                                    <option th:case="GR" selected="true" th:value="${country.code}" th:attr="data-icon= '/eidas/img/flags/' + ${country.name} + '_flag.gif'" th:text="${#strings.toUpperCase(country.name)}"></option>
-                                                    <option th:case="*"  th:value="${country.code}" th:attr="data-icon= '/eidas/img/flags/' + ${country.name} + '_flag.gif'" th:text="${#strings.toUpperCase(country.name)}"></option>-->
+                                                    <!--                                                    <option th:case="GR" selected="true" th:value="${country.code}" th:attr="data-icon= '/eidas/img/flags/' + ${country.name} + '_flag.gif'" th:text="${#strings.toUpperCase(country.name)}"></option>
+                                                                                                        <option th:case="*"  th:value="${country.code}" th:attr="data-icon= '/eidas/img/flags/' + ${country.name} + '_flag.gif'" th:text="${#strings.toUpperCase(country.name)}"></option>-->
                                                     <option th:case="GR" selected="true" th:value="${country.code}" th:attr="data-icon= ${urlPrefix} + '/img/flags/' + ${country.name} + '_flag.gif'" th:text="${#strings.toUpperCase(country.name)}"></option>
                                                     <option th:case="*"  th:value="${country.code}" th:attr="data-icon= ${urlPrefix} + '/img/flags/' + ${country.name} + '_flag.gif'" th:text="${#strings.toUpperCase(country.name)}"></option>
                                                 </div>
@@ -228,11 +229,13 @@
         <!--Import jQuery before materialize.js-->
         <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
         <!-- Compiled and minified JavaScript -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
+
         <script th:inline="javascript">
                                         /*<![CDATA[*/
                                         $(document).ready(function () {
-                                        $('select').material_select();
+//                                        $('select').material_select();
+                                        $('select').formSelect();
                                         $('.modal').modal();
                                         let countrySelector = $("#countrySelection").is(":visible")?$("#countrySelection"):$("#countrySelection2");
                                         if (!countrySelector.val()) {
@@ -252,8 +255,8 @@
                                         let countrySelector = $("#mobile").is(":visible")?$("#countrySelection"):$("#countrySelection2");
                                         let country = countrySelector.val();
                                         let iss = [[${issPreUrl}]];
-                                        if(country === "GR"){
-                                            iss = [[${issUrl}]];
+                                        if (country === "GR"){
+                                        iss = [[${issUrl}]];
                                         }
                                         let location = iss
                                                 + "?t=" + [[${token}]]
@@ -278,10 +281,11 @@
 
                                         function onCancelClick() {
                                         let failPage = [[${spFailPage}]];
-                                        window.location = "/authfail?reason=disagree";
+                                        window.location = [[${urlPrefix}]] + "/authfail?reason=disagree";
                                         }
                                         function onNextClickUAegean() {
-                                        let location = "http://eidasiss.aegean.gr:8081/ISS2/ldap.jsp?t=" + [[${token}]] + "&sp=" + [[${sp}]];
+                                        let uAegeanAP = [[${UAegeanAP}]];
+                                        let location = uAegeanAP + "?t=" + [[${token}]] + "&sp=" + [[${sp}]];
                                         window.location = location;
                                         }
 

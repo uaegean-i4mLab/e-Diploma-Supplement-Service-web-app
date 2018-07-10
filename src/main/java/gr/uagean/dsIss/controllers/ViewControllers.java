@@ -61,6 +61,7 @@ public class ViewControllers {
     final static String REDIRECT_URI = "REDIRECT_URI";
     final static String HTTP_HEADER = "HTTP_HEADER";
     final static String URL_ENCODED = "URL_ENCODED";
+    final static String UAEGEA_AP = "UAEGEAN_AP";
 
     final static Logger log = LoggerFactory.getLogger(ViewControllers.class);
 
@@ -104,6 +105,7 @@ public class ViewControllers {
         String urlPrefix = StringUtils.isEmpty(paramServ.getParam(URL_PREFIX)) ? "" : paramServ.getParam(URL_PREFIX);
         mv.addObject("urlPrefix", urlPrefix);
 
+        String uAegeanAP = paramServ.getParam(UAEGEA_AP);
         String clientID = paramServ.getParam(CLIENT_ID);
         String redirectURI = paramServ.getParam(REDIRECT_URI);
         String responseType = "code";
@@ -114,6 +116,7 @@ public class ViewControllers {
         mv.addObject("state", state);
         boolean linkedIn = StringUtils.isEmpty(paramServ.getParam("LINKED_IN")) ? false : Boolean.parseBoolean(paramServ.getParam("LINKED_IN"));
         mv.addObject("linkedIn", linkedIn);
+        mv.addObject("UAegeanAP",uAegeanAP);
 
         return mv;
     }

@@ -29,6 +29,7 @@ services:
            - URL_ENCODED=true
            - URL_PREFIX=/eidas
            - SP_SERVER=http://testsp.com
+           - UAEGEAN_AP=http://eidasiss.aegean.gr:8081/ISS2/ldap.jsp
 
         volumes:
            - /webappConfig:/webappConfig
