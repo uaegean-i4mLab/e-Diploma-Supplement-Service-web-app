@@ -254,9 +254,10 @@
                                         function onNextClick() {
                                         let countrySelector = $("#mobile").is(":visible")?$("#countrySelection"):$("#countrySelection2");
                                         let country = countrySelector.val();
-                                        let iss = [[${issPreUrl}]];
-                                        if (country === "GR"){
-                                        iss = [[${issUrl}]];
+                                        let iss = [[${issUrl}]];
+                                        if (country === "PRE"){
+                                            iss = [[${issPreUrl}]];
+                                            country = "GR"
                                         }
                                         let location = iss
                                                 + "?t=" + [[${token}]]

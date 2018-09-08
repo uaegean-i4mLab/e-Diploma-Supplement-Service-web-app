@@ -8,8 +8,8 @@
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>DSIssLoginWebApp</name>
-    <description>Diploma Supplement ISS+ Login WebApp</description>
+    <name>IssLoginWebApp</name>
+    <description>ISS+ Login WebApp</description>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
