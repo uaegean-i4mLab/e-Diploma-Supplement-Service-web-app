@@ -33,6 +33,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -116,14 +117,14 @@ public class ViewControllers {
         mv.addObject("state", state);
         boolean linkedIn = StringUtils.isEmpty(paramServ.getParam("LINKED_IN")) ? false : Boolean.parseBoolean(paramServ.getParam("LINKED_IN"));
         mv.addObject("linkedIn", linkedIn);
-        mv.addObject("UAegeanAP",uAegeanAP);
+        mv.addObject("UAegeanAP", uAegeanAP);
 
         return mv;
     }
 
     @RequestMapping("/authsuccess")
     public String authorizationSuccess(@RequestParam(value = "t", required = false) String token,
-            HttpSession httpSession, HttpServletRequest request, HttpServletResponse response) {
+            HttpSession httpSession, HttpServletRequest request, HttpServletResponse response, ModelAndView mv) {
 
         if (cacheManager.getCache("ips").get(request.getRemoteAddr()) != null) {
             String jwt = cacheManager.getCache("tokens").get(token).get().toString();
@@ -142,6 +143,7 @@ public class ViewControllers {
 
                 }
             }
+
             return "redirect:" + paramServ.getParam(SP_SUCCESS_PAGE);
         }
 
@@ -155,16 +157,28 @@ public class ViewControllers {
     @RequestMapping("/authfail")
     public String authorizationFail(@RequestParam(value = "t", required = false) String token,
             @RequestParam(value = "reason", required = false) String reason,
+            @CookieValue("localeInfo") String langCookie,
             Model model) {
 
         Cache.ValueWrapper errorMsg = token != null ? cacheManager.getCache("errors").get(token) : null;
         if (token != null && model.asMap().get("errorMsg") == null) {
             if (errorMsg != null && errorMsg.get() != null) {
-                model.addAttribute("title", "Registration/Login Cancelled");
+                if (langCookie != null && langCookie.equals("gr")) {
+                    model.addAttribute("title", "Η διαδικασία ταυτοποίησης ακυρώθηκε από το χρήστη");
+                } else {
+                    model.addAttribute("title", "Registration/Login Cancelled");
+
+                }
                 model.addAttribute("errorMsg", errorMsg.get());
             } else {
-                model.addAttribute("title", "Non-sucessful authentication");
-                model.addAttribute("errorMsg", "Please, return to the home page and re-initialize the process. If the authentication fails again, please contact your national eID provider");
+                if (langCookie != null && langCookie.equals("gr")) {
+                    model.addAttribute("title", "Η διαδικασία ταυτοποίησης απέτυχε");
+                    model.addAttribute("errorMsg", "Παρακαλώ, επιστρέψτε στην αρχική σελίδα και ξεκινήστε τη διαδικασία από την αρχή. Σε περίπτωση αποτυχίας παρακαλώ επικοινωνίστε με τον διαχειριστή του εθνικού σας πάροχου ηλεκτρονικής ταυτότητας.");
+                } else {
+                    model.addAttribute("title", "Non-sucessful authentication");
+                    model.addAttribute("errorMsg", "Please, return to the home page and re-initialize the process. If the authentication fails again, please contact your national eID provider");
+
+                }
             }
         }
 
@@ -175,13 +189,20 @@ public class ViewControllers {
                 model.addAttribute("errorType", "CANCEL");
             }
             model.addAttribute("title", "");
-            model.addAttribute("errorMsg", "Registration/Login Cancelled");
+            if (langCookie != null && langCookie.equals("gr")) {
+                model.addAttribute("errorMsg", "Η διαδικασία ταυτοποίησης διακόπηκε");
+
+            } else {
+                model.addAttribute("errorMsg", "Registration/Login termintated");
+
+            }
         }
 
         String urlPrefix = StringUtils.isEmpty(paramServ.getParam(URL_PREFIX)) ? "" : paramServ.getParam(URL_PREFIX);
         model.addAttribute("urlPrefix", urlPrefix);
         model.addAttribute("logo", paramServ.getParam(SP_LOGO));
         model.addAttribute("server", paramServ.getParam("SP_SERVER"));
+
         return "authfail";
     }
 

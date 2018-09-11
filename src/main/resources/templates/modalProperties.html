@@ -10,12 +10,12 @@
                 <div class="container">
                     <div class="row">
                         <div class="col s12">
-                            <h4>Which attributes will be requested</h4>
+                            <h4 th:text="#{attributes}">Which attributes will be requested</h4>
                         </div>
 
                     </div>
                     <div class="row">
-                        <div class="col s12">
+                        <div class="col s12" th:text="#{consent}">
                             By agreeing to proceed the system will request the following identification attributes from the eID_EU network. 
                             These attributes will not be propagated to third parties and will only be used within the premises of this application.
                         </div>
@@ -78,8 +78,8 @@
             <div class="modal-footer">
                 <div class="container">
                     <div class="row" style="margin-bottom: 0;" >
-                        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
-                        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat" onclick="onCancelClick()"> Disagree</a>
+                        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat"  th:text="#{agree}">Agree</a>
+                        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat" onclick="onCancelClick()"  th:text="#{disagree}"> Disagree</a>
                     </div>
                 </div>
             </div>

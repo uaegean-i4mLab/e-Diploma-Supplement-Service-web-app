@@ -12,23 +12,22 @@
                      margin-left: 0.7rem;
                      padding-top: 1em;"></div>
 
-                <div class="col s12 m4 footerCol" id="flags">
+                <div class="col s12 m4 footerCol" id="flags" style="padding-left: 5em;">
                     <a target="_blank" href="https://ec.europa.eu/inea/en/connecting-europe-facility">
                         <img th:src="${urlPrefix +'/img/en_cef.jpg'}" src="/eidas/img/en_cef.jpg" class="responsive-img" alt="cef"></img>
                     </a>
                 </div>
-                <div class="col s12  m4 footerCol" style="padding-left: 5%;">
-                    <p style="margin-top: 0;text-align: justify; color: black;">
-                         The integration of this Service with the eIDAS Network has been
+                <div class="col s12  m4 footerCol" style="padding-left: 5em;">
+                    <p style="margin-top: 0;text-align: justify; color: black;" th:utext="#{footer}">
+<!--                         The integration of this Service with the eIDAS Network has been
                          implemented by <a href="http://www.atlantis-group.gr/" target="_blank">UAegean | i4m Lab </a>, and
                          funded by the European Commission (CEF Programme - <a href="http://www.leps-project.eu/" target="_blank">LEPS project</a> | Agreement number:
-                            INEA/CEF/ICT/A2016/1271348)
+                            INEA/CEF/ICT/A2016/1271348)-->
+                           
 
                     </p>
-
-                    <p></p>
                 </div>
-                <div class="col s12  m4 footerCol" style="padding-left: 6%; margin-top: 0.2%;">
+                <div class="col s12  m4 footerCol" style="padding-left: 5em; margin-top: 0.2%;">
                     <a target="_blank" href="//opensource.org"><img th:src="${urlPrefix + '/img/open_source1-4.png'}" src="/eidas/img/open_source1-4.png" class="responsive-img" alt="cef"/></a>
                     <p style="margin:0">Developed with Open Source Software (OSS) </p>
                 </div>

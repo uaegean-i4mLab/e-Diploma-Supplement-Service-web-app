@@ -49,13 +49,13 @@
                                  max-width:  60px;
                                  margin-left: 10%;
                                  "/>
-                            <p style="margin-top:  0;">Instructions</p>
+                            <p style="margin-top:  0;" th:text="#{instructions}">Instructions</p>
                         </a>
                     </div>
                     <div class="col s4  l12">
                         <a target="_blank" href="https://docs.google.com/document/d/17EKb0gAhDPDOuCTgolxR5Ydzxa97VywpHzuM_-c4mdk/edit?usp=sharing" style="margin-left: 0.5rem;">
                             <i class="medium material-icons">info_outline</i>
-                            <p style="margin-left: 1.2rem; margin-top: 0;margin-bottom: 0;">About</p>
+                            <p style="margin-left: 1.2rem; margin-top: 0;margin-bottom: 0;" th:text="#{about}">About</p>
                         </a>
                     </div>
 
@@ -65,7 +65,7 @@
                             <img th:src="${urlPrefix + '/img/eidas_logo2.jpg'}" src="/eidas/img//eidas_logo2.jpg" style="max-width: 56px;
                                  margin-left: 10%;"/>
                             <p style="margin-top: 0;
-                               margin-left: 0.7rem;">@eID_EU</p>
+                               margin-left: 1.8em;" th:text="#{help}">@eID_EU</p>
                         </a>
                     </div>
 
